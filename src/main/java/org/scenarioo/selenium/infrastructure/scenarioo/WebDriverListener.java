@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.scenarioo.api.ScenarioDocuWriter;
+import org.scenarioo.model.docu.entities.Page;
 import org.scenarioo.model.docu.entities.Step;
 import org.scenarioo.model.docu.entities.StepDescription;
 import org.scenarioo.model.docu.entities.StepHtml;
@@ -28,15 +29,24 @@ public class WebDriverListener implements WebDriverEventListener {
 	public void afterNavigateTo(String url, WebDriver driver) {
 		writeStep(driver);
 	}
+	
+	@Override
+	public void afterClickOn(WebElement element, WebDriver driver) {
+		writeStep(driver);
+
+	}
 
 	private void writeStep(WebDriver driver) {
 		Step step = new Step();
+		Page page = new Page(driver.getTitle());
+		step.setPage(page);
 		StepHtml stepHtml = new StepHtml(driver.getPageSource());
 		step.setHtml(stepHtml);
 		StepDescription stepDescription = new StepDescription();
-		stepDescription.setTitle(driver.getTitle());
+		int stepIndex = context.getNextStepIndex();
+		stepDescription.setIndex(stepIndex);
 		byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-		writer.saveScreenshotAsPng(context.getCurrentUseCase(), context.getCurrentScenario(), context.getNextStepIndex(), screenshot);
+		writer.saveScreenshotAsPng(context.getCurrentUseCase(), context.getCurrentScenario(), stepIndex, screenshot);
 		step.setStepDescription(stepDescription);
 		
 		writer.saveStep(context.getCurrentUseCase(), context.getCurrentScenario(), step);
@@ -81,12 +91,6 @@ public class WebDriverListener implements WebDriverEventListener {
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void afterClickOn(WebElement element, WebDriver driver) {
-		writeStep(driver);
 
 	}
 

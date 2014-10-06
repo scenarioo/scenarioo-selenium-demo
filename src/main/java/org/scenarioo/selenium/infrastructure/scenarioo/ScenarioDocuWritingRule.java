@@ -95,6 +95,8 @@ public class ScenarioDocuWritingRule extends TestWatcher {
 	@Override
 	protected void failed(final Throwable e, final Description description) {
 		writeScenarioDescription(description, "failed");
+		// Usually this should be handled by the build script
+		ScenariooProperties.writeFailedBuildDescription();
 	}
 	
 	private void writeScenarioDescription(final Description testMethodDescription, final String status) {
