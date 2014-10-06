@@ -41,7 +41,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.scenarioo.selenium.infrastructure.components.PageComponent;
-import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListener;
+import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
 /**
  * Abstraction of the Selenium API to access the browser window inside which the current web test is running.
@@ -59,7 +59,7 @@ public class Browser {
 	 */
 	public static Browser createFirefoxDriver() {
 		EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(new FirefoxDriver());
-		eventFiringDriver.register(new WebDriverListener());
+		eventFiringDriver.register(new WebDriverListenerAdapter());
 		return new Browser(eventFiringDriver);
 	}
 	
@@ -103,8 +103,8 @@ public class Browser {
 	 * 
 	 * This should be the usual way to create components.
 	 */
-	public <T extends PageComponent> T create(Class<T> clazz, By by) {
-		return create(clazz, new HtmlElement(by));
+	public <T extends PageObject> T create(Class<T> clazz, By by) {
+		return PageObjectFactory.create(clazz, by);
 	}
 
 	/**
@@ -114,28 +114,14 @@ public class Browser {
 	 * Do not use this method to check that no component exists, use {@link #assertElementDoesNotExist(By)} to check
 	 * that none is existing.
 	 */
-	public <T extends PageComponent> List<T> find(Class<T> clazz, By by) {
+	public <T extends PageObject> List<T> find(Class<T> clazz, By by) {
 		List<T> result = new ArrayList<T>();
 		List<HtmlElement> elements = findElements(by);
 		for (HtmlElement element : elements) {
-			result.add(create(clazz, element));
+			result.add(PageObjectFactory.createInternal(clazz, element));
 		}
 		return result;
 	}
-
-
-	/**
-	 * Only for internal usage.
-	 */
-	<T extends PageComponent> T create(Class<T> clazz, HtmlElement element) {
-		try {
-			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
-			return constructor.newInstance(element);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
-		}
-	}
-
 
 	/**
 	 * Only for internal usage in HtmlElement

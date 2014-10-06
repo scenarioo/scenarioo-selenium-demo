@@ -13,15 +13,15 @@ public class AddTaskWebtest extends WebTest {
 	
 	@Before
 	public void init() {
-		overviewPage = new OverviewPage();
-		advancedTaskPage = new AdvancedTaskPage();
+		overviewPage = create(OverviewPage.class);
+		advancedTaskPage = create(AdvancedTaskPage.class);
 	}
 
 	
 	@Test
 	public void addQuickTask() {
 		overviewPage.start();
-		overviewPage.showTodoList("Todo2");
+		overviewPage.showTodoList("Todo");
 		overviewPage.addQuickTask("Einleitung");
 		overviewPage.assertTaskExists("Einleitung");
 	}

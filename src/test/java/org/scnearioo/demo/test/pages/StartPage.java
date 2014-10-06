@@ -30,15 +30,17 @@
 package org.scnearioo.demo.test.pages;
 
 import org.openqa.selenium.By;
-import org.scenarioo.selenium.infrastructure.pages.WebPage;
+import org.scenarioo.selenium.infrastructure.HtmlElement;
+import org.scenarioo.selenium.infrastructure.PageObject;
 import org.scnearioo.demo.test.components.MainMenuComponent;
 
-public class StartPage extends WebPage {
+public class StartPage extends PageObject {
 	
 	private	MainMenuComponent mainMenu;
 	
-	public StartPage() {
-		mainMenu = getBrowser().create(MainMenuComponent.class, By.className("mainMenu"));
+	public StartPage(HtmlElement element) {
+		super(element);
+		mainMenu = create(MainMenuComponent.class, By.className("mainMenu"));
 	}
 
 	public void startWebShopUnauthenticated() {

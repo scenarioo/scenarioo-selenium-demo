@@ -12,7 +12,7 @@ import org.scenarioo.model.docu.entities.Step;
 import org.scenarioo.model.docu.entities.StepDescription;
 import org.scenarioo.model.docu.entities.StepHtml;
 
-public class WebDriverListener implements WebDriverEventListener {
+public class WebDriverListenerAdapter implements WebDriverEventListener {
 	
 	private ScenariooContext context = ScenariooContext.get();
 	

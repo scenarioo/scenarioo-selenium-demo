@@ -29,46 +29,51 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.scenarioo.selenium.infrastructure.scenarioo.ScenarioDocuWritingRule;
-import org.scenarioo.selenium.infrastructure.scenarioo.UseCaseDocuWritingRule;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
 /**
- * Base class for all web tests using selenium and scenarioo together for testing and documenting your software.
+ * Base class for all page objects. A page objects abstracts the funtionality provided by one part of your web application under test (might be whole page or just some part, some UI elements of it).
  * 
- * Provides most basic functionality needed in any web test. Use page objects and components for accessing the content of the web pages.
+ * A page obkject always relates to a context in the DOM tree inside which this functionality lives to access it. This is the 'element' which is the topmost element for this page object.
+ * For root page objects the elemnt can simply be initialized to the body element by using the default constructor.
+ * 
+ * See PageObject pattern for more information about this.
  */
-public class WebTest {
+public class PageObject {
 	
-	@Rule
-	public BrowserResource browserResource = new BrowserResource();
-	
+	protected final HtmlElement element;
+
 	/**
-	 * Rule to write the use case information for each test class
+	 * Create page object in context of an HtmlElement. Should never be used directly, use factory create methods instead e.g. on PageObject itself (for sub page objects) or directly on WebTest.
+	 * @param element the context element for the page object
 	 */
-	@ClassRule
-	public static UseCaseDocuWritingRule useCaseWritingRule = new UseCaseDocuWritingRule();
+	public PageObject(HtmlElement element) {
+		this.element = element;
+	}
 	
-	/**
-	 * Rule to write the scenario information for each test
-	 */
-	@Rule
-	public ScenarioDocuWritingRule scenarioWritingRule = new ScenarioDocuWritingRule();
-	
-	/**
-	 * Direct access to current browser.
-	 */
 	public Browser getBrowser() {
 		return BrowserResource.getBrowser();
 	}
 	
 	/**
-	 * Create root page objects, for other page objects use create and find methods inside the parent page objects themselves.
+	 * For creating components inside the scope of this component.
+	 * 
+	 * clazz is only needed because of type erasure in Java, in C# this might be done more elegantly.
 	 */
-	public <T extends PageObject> T create(Class<T> clazz) {
-		return PageObjectFactory.create(clazz);
+	protected <T extends PageObject> T create(Class<T> clazz, final By byWithinElement) {
+		return element.create(clazz, byWithinElement);
 	}
 
-	
+	/**
+	 * For finding elements inside the scope of this component.
+	 * 
+	 * Only works if the elements of the searched components are already present.
+	 */
+	protected <T extends PageComponent> List<T> find(Class<T> clazz, final By byWithinElement) {
+		return element.find(clazz, byWithinElement);
+	}
+
 }
