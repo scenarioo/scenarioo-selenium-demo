@@ -31,7 +31,7 @@ package org.scenarioo.selenium.infrastructure.components;
 
 import org.scenarioo.selenium.infrastructure.HtmlElement;
 
-public class Button extends PageComponent {
+public class Button extends TextElement {
 
 	public Button(HtmlElement element) {
 		super(element);
