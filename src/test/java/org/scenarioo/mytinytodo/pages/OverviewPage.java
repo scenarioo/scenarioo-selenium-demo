@@ -6,4 +6,14 @@ public class OverviewPage extends WebPage {
 	public void start() {
 		getBrowser().navigateTo("http://localhost/mytinytodo/");
 	}
+
+	public void addQuickTask(String taskName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void openAdvancedTask() {
+		// TODO Auto-generated method stub
+		
+	}
 }
