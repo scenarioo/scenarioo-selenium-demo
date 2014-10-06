@@ -41,7 +41,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.scenarioo.selenium.infrastructure.components.PageComponent;
-import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListener;
+import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
 /**
  * Abstraction of the Selenium API to access the browser window inside which the current web test is running.
@@ -59,7 +59,7 @@ public class Browser {
 	 */
 	public static Browser createFirefoxDriver() {
 		EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(new FirefoxDriver());
-		eventFiringDriver.register(new WebDriverListener());
+		eventFiringDriver.register(new WebDriverListenerAdapter());
 		return new Browser(eventFiringDriver);
 	}
 	
