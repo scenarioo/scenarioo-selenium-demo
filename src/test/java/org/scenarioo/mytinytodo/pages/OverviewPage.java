@@ -13,8 +13,8 @@ public class OverviewPage extends PageObject {
 	private Button addButton = getBrowser().create(Button.class, By.cssSelector("#lists div.mtt-tabs-add-button"));
 	private Button allListsButton = getBrowser().create(Button.class, By.cssSelector("#list_all a"));
 	
-	private Textfield addTaskTextfield = getBrowser().create(Textfield.class, By.id("task"));
-	private Button addTaskButton = getBrowser().create(Button.class, By.id("newtask_submit")); // TODO hack, it's not a button
+	private Textfield addTaskTextfield = create(Textfield.class, By.id("task"));
+	private Button addTaskButton = create(Button.class, By.id("newtask_submit")); // TODO hack, it's not a button
 	
 	public OverviewPage(HtmlElement element) {
 		super(element);
