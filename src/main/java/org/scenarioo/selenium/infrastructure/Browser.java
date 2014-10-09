@@ -31,7 +31,6 @@ package org.scenarioo.selenium.infrastructure;
 
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.scenarioo.selenium.infrastructure.components.PageComponent;
 import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
 /**

@@ -1,14 +1,19 @@
 package org.scenarioo.mytinytodo.pages;
 
 import org.openqa.selenium.By;
+import org.scenarioo.selenium.infrastructure.HtmlElement;
+import org.scenarioo.selenium.infrastructure.PageObject;
 import org.scenarioo.selenium.infrastructure.components.Button;
 import org.scenarioo.selenium.infrastructure.components.Textfield;
-import org.scenarioo.selenium.infrastructure.pages.WebPage;
 
-public class OverviewPage extends WebPage {
+public class OverviewPage extends PageObject {
 	
-	private Textfield addTaskTextfield = getBrowser().create(Textfield.class, By.id("task"));
-	private Button addTaskButton = getBrowser().create(Button.class, By.id("newtask_submit")); // TODO hack, it's not a button
+	private Textfield addTaskTextfield = create(Textfield.class, By.id("task"));
+	private Button addTaskButton = create(Button.class, By.id("newtask_submit")); // TODO hack, it's not a button
+	
+	public OverviewPage(HtmlElement element) {
+		super(element);
+	}
 	
 	public void start() {
 		getBrowser().navigateTo("http://localhost/mytinytodo/");

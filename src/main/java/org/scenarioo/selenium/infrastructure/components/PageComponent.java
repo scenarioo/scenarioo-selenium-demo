@@ -36,7 +36,7 @@ import org.scenarioo.selenium.infrastructure.HtmlElement;
 import org.scenarioo.selenium.infrastructure.PageObject;
 
 /**
- * Most basic page component, other page components might extend from this base class, in case the provided API makes sense for subcomponents too.
+ * Base class for page components.
  */
 public abstract class PageComponent extends PageObject {
 
