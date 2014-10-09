@@ -31,6 +31,7 @@ package org.scenarioo.selenium.infrastructure;
 
 import static org.junit.Assert.fail;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.scenarioo.selenium.infrastructure.components.PageComponent;
+import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
 /**
  * Abstraction of the Selenium API to access the browser window inside which the current web test is running.
@@ -54,7 +58,9 @@ public class Browser {
 	 * Get a browser with a new selenium web driver to run your tests in a firefox browser.
 	 */
 	public static Browser createFirefoxDriver() {
-		return new Browser(new FirefoxDriver());
+		EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(new FirefoxDriver());
+		eventFiringDriver.register(new WebDriverListenerAdapter());
+		return new Browser(eventFiringDriver);
 	}
 	
 	public Browser(WebDriver driver) {

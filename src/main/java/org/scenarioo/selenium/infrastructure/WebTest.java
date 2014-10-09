@@ -29,7 +29,10 @@
 
 package org.scenarioo.selenium.infrastructure;
 
+import org.junit.ClassRule;
 import org.junit.Rule;
+import org.scenarioo.selenium.infrastructure.scenarioo.ScenarioDocuWritingRule;
+import org.scenarioo.selenium.infrastructure.scenarioo.UseCaseDocuWritingRule;
 
 /**
  * Base class for all web tests using selenium and scenarioo together for testing and documenting your software.
@@ -40,6 +43,18 @@ public class WebTest {
 	
 	@Rule
 	public BrowserResource browserResource = new BrowserResource();
+	
+	/**
+	 * Rule to write the use case information for each test class
+	 */
+	@ClassRule
+	public static UseCaseDocuWritingRule useCaseWritingRule = new UseCaseDocuWritingRule();
+	
+	/**
+	 * Rule to write the scenario information for each test
+	 */
+	@Rule
+	public ScenarioDocuWritingRule scenarioWritingRule = new ScenarioDocuWritingRule();
 	
 	/**
 	 * Direct access to current browser.

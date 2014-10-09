@@ -185,6 +185,16 @@ public final class HtmlElement {
 			}
 		});
 	}
+	
+	public void sendKeys(final String text) {
+		callOperation(new ElementOperation<Void>() {
+			@Override
+			public Void call(WebElement elem) {
+				elem.sendKeys(text);
+				return null;
+			}
+		});
+	}
 
 	/**
 	 * For resolving relative By inside this element
