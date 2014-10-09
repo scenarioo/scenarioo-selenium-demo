@@ -11,7 +11,7 @@ public class SimpleExampleWebTest extends WebTest {
 	
 	@Before
 	public void setUp() {
-		startPage = new StartPage();
+		startPage = create(StartPage.class);
 	}
 	
 	@Test
@@ -21,6 +21,7 @@ public class SimpleExampleWebTest extends WebTest {
 		// mainPageNavigation.expectNumberOfItemsInBasket(0);
 		
 		startPage.selectHotSaucesCatalogue();		
+		
 		// hotSaucesCatalogue.expectFirstSauceIsNewSuddenDeathSauce();
 		
 		// hotSaucesCatalogue.putFirstSauceIntoBasket();

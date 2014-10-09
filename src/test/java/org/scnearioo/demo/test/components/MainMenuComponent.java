@@ -31,10 +31,10 @@ package org.scnearioo.demo.test.components;
 
 import org.openqa.selenium.By;
 import org.scenarioo.selenium.infrastructure.HtmlElement;
+import org.scenarioo.selenium.infrastructure.PageObject;
 import org.scenarioo.selenium.infrastructure.components.Button;
-import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
-public class MainMenuComponent extends PageComponent {
+public class MainMenuComponent extends PageObject {
 	
 	private Button hotSaucesButton;
 		

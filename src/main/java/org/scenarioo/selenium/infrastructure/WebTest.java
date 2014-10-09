@@ -41,8 +41,19 @@ public class WebTest {
 	@Rule
 	public BrowserResource browserResource = new BrowserResource();
 	
+	/**
+	 * Direct access to current browser.
+	 */
 	public Browser getBrowser() {
 		return BrowserResource.getBrowser();
 	}
+	
+	/**
+	 * Create root page objects, for other page objects use create and find methods inside the parent page objects themselves.
+	 */
+	public <T extends PageObject> T create(Class<T> clazz) {
+		return PageObjectFactory.create(clazz);
+	}
+
 	
 }

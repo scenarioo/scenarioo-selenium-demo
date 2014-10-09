@@ -27,20 +27,48 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.scenarioo.selenium.infrastructure.pages;
+package org.scenarioo.selenium.infrastructure;
 
-import org.scenarioo.selenium.infrastructure.Browser;
-import org.scenarioo.selenium.infrastructure.BrowserResource;
+import java.lang.reflect.Constructor;
+
+import org.openqa.selenium.By;
 
 /**
- * Base class for all page objects. A page objects abstracts the funtionality provided by one page of your web application under test
+ * Factory to create any page object.
+ * Should not be used directly in your test code.
  * 
- * See PageObject pattern for more information about this.
+ * Either use create methods on your {@link WebTest} or {@link Browser} or on {@link PageObject} instead to always create objects in correct context.
  */
-public class WebPage {
+public class PageObjectFactory {
 	
-	protected Browser getBrowser() {
-		return BrowserResource.getBrowser();
-	}	
+	/**
+	 * Create a page object as root page object directly using the html body as the POs context element.
+	 * @return the created root Page Object.
+	 */
+	public static <T extends PageObject> T create(Class<T> clazz) {
+		return createInternal(clazz, new HtmlElement(By.tagName("body")));
+	}
+	
+	/**
+	 * Create a page object in context of a DOM element with gven By.
+	 * @param clazz the class to create
+	 * @param by the by that points to the page object's DOM element.
+	 * @return the created page object
+	 */
+	public static <T extends PageObject> T create(Class<T> clazz, By by) {
+		return createInternal(clazz, new HtmlElement(by));
+	}
+	
+	/**
+	 * Only for internal usage.
+	 */
+	static <T extends PageObject> T createInternal(Class<T> clazz, HtmlElement element) {
+		try {
+			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
+			return constructor.newInstance(element);
+		} catch (Exception e) {
+			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
+		}
+	}
 
 }

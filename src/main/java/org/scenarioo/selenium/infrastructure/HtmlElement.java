@@ -62,7 +62,7 @@ public final class HtmlElement {
 	/**
 	 * For internal use only.
 	 * 
-	 * Use {@link SeleniumWrapper#create(Class, By)} or {@link SeleniumWrapper#find(Class, By)} to get your page
+	 * Use {@link SeleniumWrapper#createInternal(Class, By)} or {@link SeleniumWrapper#find(Class, By)} to get your page
 	 * components which internaly hold an HtmlElement
 	 */
 	HtmlElement(By by) {
@@ -76,7 +76,7 @@ public final class HtmlElement {
 	/**
 	 * For internal use only.
 	 * 
-	 * Use {@link SeleniumWrapper#create(Class, By)} or {@link SeleniumWrapper#find(Class, By)} to get your page
+	 * Use {@link SeleniumWrapper#createInternal(Class, By)} or {@link SeleniumWrapper#find(Class, By)} to get your page
 	 * components which internaly hold an HtmlElement
 	 */
 	HtmlElement(WebElement element) {
@@ -189,24 +189,25 @@ public final class HtmlElement {
 	/**
 	 * For resolving relative By inside this element
 	 */
-	public <T extends PageComponent> T create(Class<T> clazz, final By byWithinElement) {
+	public <T extends PageObject> T create(Class<T> clazz, final By byWithinElement) {	
 		if (by != null) {
 			return getBrowser().create(clazz, new ByChained(by, byWithinElement));
 		}
 		else {
+			// TODO #356: this should be done lazyly, in case that the sub element is not yet present now (=when calling create)
 			WebElement childElement = element.findElement(byWithinElement);
 			if (childElement == null) {
 				throw new RuntimeException("Element not found for by= " + byWithinElement + " inside element ="
 						+ element);
 			}
-			return getBrowser().create(clazz, new HtmlElement(childElement));
+			return PageObjectFactory.createInternal(clazz, new HtmlElement(childElement));
 		}
 	}
 
 	/**
 	 * For resolving relative By inside this element
 	 */
-	public <T extends PageComponent> List<T> find(Class<T> clazz, final By byWithinElement) {
+	public <T extends PageObject> List<T> find(Class<T> clazz, final By byWithinElement) {
 		if (by != null) {
 			return getBrowser().find(clazz, new ByChained(by, byWithinElement));
 		}
@@ -214,7 +215,7 @@ public final class HtmlElement {
 			List<WebElement> elements = element.findElements(byWithinElement);
 			List<T> result = new ArrayList<T>();
 			for (WebElement elem : elements) {
-				result.add(getBrowser().create(clazz, new HtmlElement(elem)));
+				result.add(PageObjectFactory.createInternal(clazz, new HtmlElement(elem)));
 			}
 			return result;
 		}
