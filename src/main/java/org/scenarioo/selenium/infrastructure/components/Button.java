@@ -27,28 +27,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.scnearioo.demo.test.pages;
+package org.scenarioo.selenium.infrastructure.components;
 
-import org.openqa.selenium.By;
-import org.scenarioo.selenium.infrastructure.pages.WebPage;
-import org.scnearioo.demo.test.components.MainMenuComponent;
+import org.scenarioo.selenium.infrastructure.HtmlElement;
 
-public class StartPage extends WebPage {
-	
-	private	MainMenuComponent mainMenu;
-	
-	public StartPage() {
-		mainMenu = getBrowser().create(MainMenuComponent.class, By.className("mainMenu"));
+public class Button extends PageComponent {
+
+	public Button(HtmlElement element) {
+		super(element);
 	}
 
-	public void startWebShopUnauthenticated() {
-		getBrowser().navigateTo("http://localhost:8080");
+	public void click() {
+		element.click();
 	}
-
-	public void selectHotSaucesCatalogue() {
-		mainMenu.selectHotSaucesCatalogue();
-	}
-	
-	
 
 }

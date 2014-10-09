@@ -29,13 +29,24 @@
 
 package org.scenarioo.selenium.infrastructure;
 
+import static org.junit.Assert.fail;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
 /**
  * Abstraction of the Selenium API to access the browser window inside which the current web test is running.
  * 
- * The browser encapsulates the Selenium API to have an additional abstraction layer for cross cutting concerns and abstraction of the concrete ui testing toolkit used.
+ * The Browser together with {@link HtmlElement} encapsulates the Selenium API to have an additional abstraction layer for cross cutting concerns and abstraction of the concrete ui testing toolkit used.
+ * 
+ * Based on this API all page components and page objects have to be built to use as building blocks for the tests.
  */
 public class Browser {
 	
@@ -53,13 +64,25 @@ public class Browser {
 	}
 	
 	/**
-	 * Load URL in Browser.
+	 * Navigate to an URL in browser.
 	 * @param url the url to load.
 	 * 
 	 * see {@link WebDriver#get(String)}.
 	 */
-	public void get(String url) {
-		driver.get(url);		
+	public void navigateTo(final String url) {
+		driver.get(url);
+	}
+	
+	public void refresh() {
+		driver.navigate().to(driver.getCurrentUrl());
+	}
+
+	public void back() {
+		driver.navigate().back();
+	}
+
+	public String getCurrentUrl() {
+		return driver.getCurrentUrl();
 	}
 
 	/**
@@ -67,6 +90,76 @@ public class Browser {
 	 */
 	void quit() {
 		driver.quit();		
+	}
+
+	/**
+	 * Create a page component of concrete type for later use (the component does not necessarily have to exist in the
+	 * browser, can be precreated before it realy exists, which might be helpfull to test for dynamic created page
+	 * components for existance etc.).
+	 * 
+	 * This should be the usual way to create components.
+	 */
+	public <T extends PageComponent> T create(Class<T> clazz, By by) {
+		return create(clazz, new HtmlElement(by));
+	}
+
+	/**
+	 * Find a list of page components of a concrete type. Finding is only possible as soon as the components have realy
+	 * been created.
+	 * 
+	 * Do not use this method to check that no component exists, use {@link #assertElementDoesNotExist(By)} to check
+	 * that none is existing.
+	 */
+	public <T extends PageComponent> List<T> find(Class<T> clazz, By by) {
+		List<T> result = new ArrayList<T>();
+		List<HtmlElement> elements = findElements(by);
+		for (HtmlElement element : elements) {
+			result.add(create(clazz, element));
+		}
+		return result;
+	}
+
+
+	/**
+	 * Only for internal usage.
+	 */
+	<T extends PageComponent> T create(Class<T> clazz, HtmlElement element) {
+		try {
+			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
+			return constructor.newInstance(element);
+		} catch (Exception e) {
+			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
+		}
+	}
+
+
+	/**
+	 * Only for internal usage in HtmlElement
+	 */
+	WebElement findElementInternal(final By by) {
+		final List<WebElement> elements = driver.findElements(by);
+		if (elements.size() > 1) {
+			fail("More than one element found for by = " + by);
+		} else if (elements.size() == 0) {
+			fail("No element found for by = " + by);
+		}
+		return elements.get(0);
+	}
+
+
+	/**
+	 * Only for internal usage, will fail if there is not at least one element.
+	 */
+	List<HtmlElement> findElements(final By by) {
+		List<WebElement> elements = driver.findElements(by);
+		if (elements.isEmpty()) {
+			fail("No HtmlElement found with by = " + by);
+		}
+		List<HtmlElement> result = new ArrayList<HtmlElement>();
+		for (WebElement elem : elements) {
+			result.add(new HtmlElement(elem));
+		}
+		return result;
 	}
 
 }

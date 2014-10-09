@@ -27,28 +27,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.scnearioo.demo.test.pages;
+package org.scenarioo.selenium.infrastructure;
 
-import org.openqa.selenium.By;
-import org.scenarioo.selenium.infrastructure.pages.WebPage;
-import org.scnearioo.demo.test.components.MainMenuComponent;
+import org.openqa.selenium.WebElement;
 
-public class StartPage extends WebPage {
-	
-	private	MainMenuComponent mainMenu;
-	
-	public StartPage() {
-		mainMenu = getBrowser().create(MainMenuComponent.class, By.className("mainMenu"));
-	}
+/**
+ * Simple interfaces for operations to perform on web elements. Used for implementation of {@link HtmlElement}.
+ */
+interface ElementOperation<T> {
 
-	public void startWebShopUnauthenticated() {
-		getBrowser().navigateTo("http://localhost:8080");
-	}
-
-	public void selectHotSaucesCatalogue() {
-		mainMenu.selectHotSaucesCatalogue();
-	}
-	
-	
+	public T call(WebElement elem);
 
 }
