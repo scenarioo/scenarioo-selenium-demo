@@ -1,4 +1,4 @@
-package org.scenarioo.mytinytodo.pages;
+package org.scenarioo.mytinytodo.components;
 
 import org.scenarioo.selenium.infrastructure.HtmlElement;
 import org.scenarioo.selenium.infrastructure.components.List;
