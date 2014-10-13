@@ -36,7 +36,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.pagefactory.ByChained;
+import org.openqa.selenium.support.ui.Select;
 import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
 /**
@@ -169,6 +171,26 @@ public final class HtmlElement {
 			public Void call(WebElement elem) {
 				elem.click();
 				return null;
+			}
+		});
+	}
+
+	public void doubleClick() {
+		callOperation(new ElementOperation<Void>() {
+			@Override
+			public Void call(WebElement elem) {
+				Actions action = getBrowser().createActions();
+				action.doubleClick(elem).perform();
+				return null;
+			}
+		});
+	}
+
+	public Select createSelect() {
+		return callOperation(new ElementOperation<Select>() {
+			@Override
+			public Select call(WebElement elem) {
+				return new Select(elem);
 			}
 		});
 	}

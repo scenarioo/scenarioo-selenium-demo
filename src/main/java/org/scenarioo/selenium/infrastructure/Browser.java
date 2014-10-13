@@ -38,6 +38,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
@@ -82,9 +83,13 @@ public class Browser {
 	public void back() {
 		driver.navigate().back();
 	}
-
+	
 	public String getCurrentUrl() {
 		return driver.getCurrentUrl();
+	}
+	
+	public Actions createActions() {
+		return new Actions(driver);
 	}
 
 	/**

@@ -29,52 +29,23 @@
 
 package org.scenarioo.selenium.infrastructure.components;
 
-import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.Select;
 import org.scenarioo.selenium.infrastructure.HtmlElement;
 
-import com.google.common.base.Predicate;
+public class SelectBox extends PageComponent {
 
-public abstract class List<T extends PageComponent> extends PageComponent {
-	private Class<T> itemClass;
-	
-	public List(HtmlElement element, Class<T> itemClass) {
+	public SelectBox(HtmlElement element) {
 		super(element);
-		this.itemClass = itemClass;
-	}
-	
-	public void assertExists(Predicate<T> selector) {
-		try {
-			find(selector);
-		} catch (NoSuchElementException e) {
-			Assert.fail("List item with given selector does not exist.");
-		}
-	}
-	
-	public T find(Predicate<T> selector) {
-		for (T item : findAllItems()) {
-			if (selector.apply(item)) {
-				return item;
-			}
-		}
-		throw new NoSuchElementException("No list item found matching the given selector");
-	}
-	
-	public T findByIndex(int index) {
-		return findAllItems().get(index);
 	}
 
-	private java.util.List<T> findAllItems() {
-		return find(itemClass, getItemSelector());
+	public void selectOptionByValue(String value) {
+		Select select = element.createSelect();
+		select.selectByValue(value);
 	}
 
-	/**
-	 * Override this method to implement components representing lists of custom elements (other than UL, OL lists)
-	 * 
-	 * @return A By selector for the list items, relative to the List element
-	 */
-	protected By getItemSelector() {
-		return By.tagName("li");
+	public void selectOptionByText(String text) {
+		Select select = element.createSelect();
+		select.selectByVisibleText(text);
 	}
+	
 }
