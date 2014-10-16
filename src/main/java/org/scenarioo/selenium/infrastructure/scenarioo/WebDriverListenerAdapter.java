@@ -59,73 +59,73 @@ public class WebDriverListenerAdapter implements WebDriverEventListener {
 
 	@Override
 	public void beforeNavigateBack(WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void afterNavigateBack(WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void beforeNavigateForward(WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void afterNavigateForward(WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void beforeChangeValueOf(WebElement element, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void afterChangeValueOf(WebElement element, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void beforeScript(String script, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void afterScript(String script, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 
 	}
 
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
-		// TODO Auto-generated method stub
+		// not needed yet
 	}
 
 }
