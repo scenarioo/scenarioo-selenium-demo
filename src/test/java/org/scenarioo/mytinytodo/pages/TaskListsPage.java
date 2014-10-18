@@ -14,7 +14,6 @@ public class TaskListsPage extends PageObject {
 
 	private TaskListTabBar listsTabBar = create(TaskListTabBar.class, By.cssSelector("#lists ul"));
 	private Button addListButton = create(Button.class, By.cssSelector("#lists div.mtt-tabs-add-button"));
-	private Button allListsButton = create(Button.class, By.cssSelector("#list_all a"));
 	
 	private PromptDialog taskListPrompt = new PromptDialog();
 	private ConfirmDialog taskListConfirm = new ConfirmDialog();
@@ -27,10 +26,6 @@ public class TaskListsPage extends PageObject {
 		TaskListTab tabToSelect = listsTabBar.findByTitle(title);
 		tabToSelect.select();
 	}
-
-	public void showAllTaskLists() {
-		allListsButton.click();
-	}
 	
 	public void createTaskList(String title) {
 		addListButton.click();
@@ -39,19 +34,18 @@ public class TaskListsPage extends PageObject {
 		listsTabBar.assertTabExists(title);
 	}
 	
-	public void renameTaskList(String oldTitle, String newTitle) {
-		TaskListTab taskListTab = listsTabBar.findByTitle(oldTitle);
-		taskListTab.select();
+	public void renameSelectedTaskList(String newTitle) {
+		TaskListTab taskListTab = listsTabBar.findSelectedTab();
 		TaskListContextMenu contextMenu = taskListTab.openContextMenu();
 		contextMenu.renameList();
 		taskListPrompt.assertMessage("Rename list");
 		taskListPrompt.enter(newTitle);
-		listsTabBar.assertTabExists(newTitle);
+		taskListTab.assertTitle(newTitle);
 	}
 	
-	public void deleteTaskList(String title) {
-		TaskListTab taskListTab = listsTabBar.findByTitle(title);
-		taskListTab.select();
+	public void deleteSelectedTaskList() {
+		TaskListTab taskListTab = listsTabBar.findSelectedTab();
+		String title = taskListTab.getTitle();
 		TaskListContextMenu contextMenu = taskListTab.openContextMenu();
 		contextMenu.deleteList();
 		taskListConfirm.assertMessage("This will delete current list with all tasks in it.\nAre you sure?");

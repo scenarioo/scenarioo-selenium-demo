@@ -12,7 +12,7 @@ import org.scenarioo.selenium.infrastructure.components.Textfield;
 public class TasksPage extends PageObject {
 
 	private Textfield addTaskTextfield = create(Textfield.class, By.id("task"));
-	private Button addQuickTaskButton = create(Button.class, By.id("newtask_submit")); // TODO hack, it's not a button
+	private Button addQuickTaskButton = create(Button.class, By.id("newtask_submit"));
 	private Button addAdvancedTaskButton = create(Button.class, By.id("newtask_adv"));
 	
 	private TaskList taskList = create(TaskList.class, By.id("tasklist"));

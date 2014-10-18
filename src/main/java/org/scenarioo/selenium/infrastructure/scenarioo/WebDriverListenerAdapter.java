@@ -53,7 +53,7 @@ public class WebDriverListenerAdapter implements WebDriverEventListener {
 			
 			writer.saveStep(context.getCurrentUseCase(), context.getCurrentScenario(), step);
 		} catch (UnhandledAlertException e) {
-			// TODO is there something we can do in case of a javascript alert/confirm/prompt?
+			// is there something we can do in case of a javascript alert/confirm/prompt?
 		}
 	}
 
