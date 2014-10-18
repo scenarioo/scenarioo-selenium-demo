@@ -29,9 +29,11 @@
 
 package org.scenarioo.selenium.infrastructure;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.scenarioo.selenium.infrastructure.scenarioo.ScenarioDocuWritingRule;
+import org.scenarioo.selenium.infrastructure.scenarioo.ScenariooContext;
 import org.scenarioo.selenium.infrastructure.scenarioo.UseCaseDocuWritingRule;
 
 /**
@@ -70,5 +72,8 @@ public class WebTest {
 		return PageObjectFactory.create(clazz);
 	}
 
-	
+	@Before
+	public void cleanContext() {
+		ScenariooContext.reset();
+	}
 }
