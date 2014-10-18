@@ -55,6 +55,7 @@ public class ScenariooProperties {
 		Build build = new Build(BUILD_NAME);
 		build.setStatus(status);
 		build.setDate(BUILD_DATE);
+		build.setRevision("453453");
 		writer.saveBuildDescription(build);
 	}
 }
