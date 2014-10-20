@@ -11,7 +11,7 @@ public class TaskListItem extends PageComponent {
 	private TextElement title = create(TextElement.class, By.className("task-title"));
 	private Button expandToggle = create(Button.class, By.className("task-toggle"));
 	private TextElement note = create(TextElement.class, By.cssSelector(".task-note span"));
-//	private TagList tagList = create(TagList.class, By.className("task-tags")); TODO not working yet
+	private TagList tagList = create(TagList.class, By.className("task-tags"));
 
 	public TaskListItem(HtmlElement element) {
 		super(element);
@@ -39,10 +39,9 @@ public class TaskListItem extends PageComponent {
 		note.assertText(text);
 	}
 	
-	// TODO not working yet
-//	public void assertTags(String[] tags) {
-//		for (String tag : tags) {
-//			tagList.assertTagExists(tag);
-//		}
-//	}
+	public void assertTags(String[] tags) {
+		for (String tag : tags) {
+			tagList.assertTagExists(tag);
+		}
+	}
 }

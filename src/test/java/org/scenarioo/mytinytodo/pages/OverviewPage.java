@@ -71,6 +71,6 @@ public class OverviewPage extends PageObject {
 
 	public void assertTaskWithTags(Task task) {
 		TaskListItem taskListItem = taskList.find(task.getTitle());
-//		taskListItem.assertTags(task.getTags()); TODO not working yet
+		taskListItem.assertTags(task.getTags());
 	}
 }

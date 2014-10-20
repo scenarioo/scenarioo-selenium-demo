@@ -36,6 +36,6 @@ public class AddTaskWebtest extends WebTest {
 		overviewPage.createAdvancedTask(Task.SIMPLE2.getTitle());
 		editTaskPage.assertFormPrefilled(Task.SIMPLE2);
 		editTaskPage.enter(Task.SIMPLE2_WITHTAGS);
-//		overviewPage.assertTaskWithTags(Task.SIMPLE2_WITHTAGS); TODO not working yet
+		overviewPage.assertTaskWithTags(Task.SIMPLE2_WITHTAGS);
 	}
 }
