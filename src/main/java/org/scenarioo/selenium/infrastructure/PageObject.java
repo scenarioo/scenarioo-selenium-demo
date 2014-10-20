@@ -37,7 +37,7 @@ import org.scenarioo.selenium.infrastructure.components.PageComponent;
 /**
  * Base class for all page objects. A page objects abstracts the funtionality provided by one part of your web application under test (might be whole page or just some part, some UI elements of it).
  * 
- * A page obkject always relates to a context in the DOM tree inside which this functionality lives to access it. This is the 'element' which is the topmost element for this page object.
+ * A page object always relates to a context in the DOM tree inside which this functionality lives to access it. This is the 'element' which is the topmost element for this page object.
  * For root page objects the elemnt can simply be initialized to the body element by using the default constructor.
  * 
  * See PageObject pattern for more information about this.
@@ -58,8 +58,12 @@ public class PageObject {
 		return BrowserResource.getBrowser();
 	}
 	
+
 	/**
-	 * For creating components inside the scope of this component.
+	 * Create a sub-components of concrete type inside the scope of this component. The sub-component does not necessarily have to exist in the
+	 * browser, can be created before it actually exists, which might be helpful to test for dynamically created page components for existence etc.).
+	 * 
+	 * This should be the usual way to create components.
 	 * 
 	 * clazz is only needed because of type erasure in Java, in C# this might be done more elegantly.
 	 */
@@ -67,10 +71,15 @@ public class PageObject {
 		return element.create(clazz, byWithinElement);
 	}
 
+
 	/**
-	 * For finding elements inside the scope of this component.
+	 * Find page components of a concrete type inside the scope of this component. As opposed to {@link HtmlElement#create(Class, By)}, finding is only 
+	 * possible if the elements of the searched components are already present.
 	 * 
-	 * Only works if the elements of the searched components are already present.
+	 * Usually, components created with this method should be rather short-lived, since they are based on unstable WebElements.
+	 * 
+	 * Do not use this method to check that no component exists, use {@link #assertElementDoesNotExist(By)} to check
+	 * that none is existing.
 	 */
 	protected <T extends PageComponent> List<T> find(Class<T> clazz, final By byWithinElement) {
 		return element.find(clazz, byWithinElement);

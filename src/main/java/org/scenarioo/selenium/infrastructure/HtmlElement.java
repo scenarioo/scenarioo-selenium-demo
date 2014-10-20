@@ -29,15 +29,14 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import java.util.ArrayList;
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.Select;
 import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
@@ -58,35 +57,40 @@ import org.scenarioo.selenium.infrastructure.components.PageComponent;
  */
 public final class HtmlElement {
 
-	private By by;
-	private WebElement element;
+	private ElementResolver elementResolver;
+	private WebElement cachedElement = null;
 
 	/**
 	 * For internal use only.
 	 * 
-	 * Use {@link SeleniumWrapper#createInternal(Class, By)} or {@link SeleniumWrapper#find(Class, By)} to get your page
-	 * components which internaly hold an HtmlElement
+	 * Use {@link HtmlElement#create(Class, By)} or {@link HtmlElement#find(Class, By)} to get your page
+	 * components which internally hold an HtmlElement
 	 */
 	HtmlElement(By by) {
-		if (by == null) {
-			throw new IllegalArgumentException("Not allowed to construct ElementWrapper with by='null'.");
-		}
-		this.by = by;
-		this.element = null;
+		this(new ByElementResolver(getBrowser(), by));
 	}
 
 	/**
 	 * For internal use only.
 	 * 
-	 * Use {@link SeleniumWrapper#createInternal(Class, By)} or {@link SeleniumWrapper#find(Class, By)} to get your page
-	 * components which internaly hold an HtmlElement
+	 * Use {@link HtmlElement#create(Class, By)} or {@link HtmlElement#find(Class, By)} to get your page
+	 * components which internally hold an HtmlElement
 	 */
 	HtmlElement(WebElement element) {
-		if (element == null) {
-			throw new IllegalArgumentException("Not allowed to construct ElementWrapper with element='null'.");
+		this(new PreLoadedElementResolver(element));
+	}
+
+	/**
+	 * For internal use only.
+	 * 
+	 * Use {@link HtmlElement#create(Class, By)} or {@link HtmlElement#find(Class, By)} to get your page
+	 * components which internally hold an HtmlElement
+	 */
+	HtmlElement(ElementResolver elementResolver) {
+		if (elementResolver == null) {
+			throw new IllegalArgumentException("Not allowed to construct HtmlElement with elementResolver='null'.");
 		}
-		this.by = null;
-		this.element = element;
+		this.elementResolver = elementResolver;
 	}
 
 
@@ -97,7 +101,7 @@ public final class HtmlElement {
 		return callOperation(new ElementOperation<String>() {
 			@Override
 			public String call(WebElement elem) {
-				return element.getText();
+				return elem.getText();
 			}
 		});
 	}
@@ -109,20 +113,18 @@ public final class HtmlElement {
 		return callOperation(new ElementOperation<String>() {
 			@Override
 			public String call(WebElement elem) {
-				return element.getAttribute("value");
+				return elem.getAttribute("value");
 			}
 		});
 	}
 
 	public boolean exists() {
-		if (by != null) {
-			// clear cash in this case to force resolve again.
-			element = null;
-		}
+		// clear cash in this case to force resolve again.
+		cachedElement = null;
 		return callOperation(new ElementOperation<Boolean>() {
 			@Override
 			public Boolean call(WebElement elem) {
-				return element != null;
+				return elem != null;
 			}
 		});
 	}
@@ -131,7 +133,7 @@ public final class HtmlElement {
 		return callOperation(new ElementOperation<Boolean>() {
 			@Override
 			public Boolean call(WebElement elem) {
-				return element.isSelected();
+				return elem.isSelected();
 			}
 		});
 	}
@@ -142,7 +144,7 @@ public final class HtmlElement {
 			public Boolean call(WebElement elem) {
 				// null safe: we consider a non existing element as simply not displayed, 
 				// instead of failing the test here.
-				return element != null && element.isDisplayed();
+				return elem != null && elem.isDisplayed();
 			}
 		});
 	}
@@ -151,7 +153,7 @@ public final class HtmlElement {
 		return callOperation(new ElementOperation<Boolean>() {
 			@Override
 			public Boolean call(WebElement elem) {
-				return element.isEnabled();
+				return elem.isEnabled();
 			}
 		});
 	}
@@ -219,44 +221,24 @@ public final class HtmlElement {
 	}
 
 	/**
-	 * For resolving relative By inside this element
+	 * Define a page component of concrete type for later use.
 	 */
 	public <T extends PageObject> T create(Class<T> clazz, final By byWithinElement) {	
-		if (by != null) {
-			return getBrowser().create(clazz, new ByChained(by, byWithinElement));
-		}
-		else {
-			// TODO #356: this should be done lazyly, in case that the sub element is not yet present now (=when calling create)
-			WebElement childElement = element.findElement(byWithinElement);
-			if (childElement == null) {
-				throw new RuntimeException("Element not found for by= " + byWithinElement + " inside element ="
-						+ element);
-			}
-			return PageObjectFactory.createInternal(clazz, new HtmlElement(childElement));
-		}
+		return getBrowser().create(clazz, elementResolver.childResolver(byWithinElement));
 	}
 
 	/**
-	 * For resolving relative By inside this element
+	 * Find components of a concrete type in the current DOM.
 	 */
 	public <T extends PageObject> List<T> find(Class<T> clazz, final By byWithinElement) {
-		if (by != null) {
-			return getBrowser().find(clazz, new ByChained(by, byWithinElement));
-		}
-		else {
-			List<WebElement> elements = element.findElements(byWithinElement);
-			List<T> result = new ArrayList<T>();
-			for (WebElement elem : elements) {
-				result.add(PageObjectFactory.createInternal(clazz, new HtmlElement(elem)));
-			}
-			return result;
-		}
+		return getBrowser().find(clazz, elementResolver.childResolver(byWithinElement));
 	}
+	
 
 	/**
 	 * Get the browser for convenient access inside html element.
 	 */
-	protected Browser getBrowser() {
+	protected static Browser getBrowser() {
 		return BrowserResource.getBrowser();
 	}
 
@@ -267,13 +249,13 @@ public final class HtmlElement {
 	 * Template method for all other methods implemented in this class that somehow operate on the web element.
 	 */
 	private <T> T callOperation(ElementOperation<T> operation) {
-		if (element != null && by != null) {
+		if (cachedElement != null) {
 			// Try on cached element with fallback
 			try {
-				return operation.call(element);
+				return operation.call(cachedElement);
 			} catch (StaleElementReferenceException ex) {
 				// Retry once with refreshed element
-				element = null;
+				cachedElement = null;
 				return operation.call(getElement());
 			}
 		}
@@ -283,31 +265,19 @@ public final class HtmlElement {
 	}
 
 	private WebElement getElement() {
-		if (element != null) {
-			return element;
+		if (cachedElement == null) {
+			List<WebElement> elements = elementResolver.resolve();
+			if (elements.size() != 1) {
+				fail("Expected exactly 1 element, but found " + elements.size() + " with " + elementResolver);
+			}
+			cachedElement = elements.get(0);
 		}
-		else {
-			element = getBrowser().findElementInternal(by);
-			return element;
-		}
+		return cachedElement;
 	}
 
 	@Override
 	public String toString() {
-		if (by != null) {
-			return by.toString();
-		} else {
-			String result = element.getTagName();
-			String id = element.getCssValue("id");
-			if (StringUtils.isNotBlank(id)) {
-				result += "#" + id;
-			}
-			String cssClasses = getElement().getAttribute("class");
-			if (StringUtils.isNotBlank(cssClasses)) {
-				result += " " + cssClasses;
-			}
-			return result;
-		}
+		return elementResolver.toString();
 	}
 
 }

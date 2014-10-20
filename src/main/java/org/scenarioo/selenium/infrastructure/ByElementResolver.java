@@ -29,36 +29,43 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import java.lang.reflect.Constructor;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.pagefactory.ByChained;
 
 /**
- * Factory to create any page object.
- * Should not be used directly in your test code.
- * 
- * Either use create methods on your {@link WebTest} or {@link Browser} or on {@link PageObject} instead to always create objects in correct context.
+ * Defines a list of elements using a By selector.
  */
-public class PageObjectFactory {
+class ByElementResolver implements ElementResolver {
 	
-	/**
-	 * Create a page object as root page object directly using the html body as the POs context element.
-	 * @return the created root Page Object.
-	 */
-	public static <T extends PageObject> T create(Class<T> clazz) {
-		return createInternal(clazz, new HtmlElement(By.tagName("body")));
-	}
-		
-	/**
-	 * Only for internal usage.
-	 */
-	static <T extends PageObject> T createInternal(Class<T> clazz, HtmlElement element) {
-		try {
-			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
-			return constructor.newInstance(element);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
+	private Browser browser;
+	private By by;
+	
+	public ByElementResolver(Browser browser, By by) {
+		if (browser == null) {
+			throw new IllegalArgumentException("Not allowed to construct ElementWrapper with browser='null'.");
 		}
+		if (by == null) {
+			throw new IllegalArgumentException("Not allowed to construct ElementWrapper with by='null'.");
+		}
+		this.browser = browser;
+		this.by = by;
 	}
 
+	@Override
+	public List<WebElement> resolve() {
+		return browser.findElementsInternal(by);
+	}
+	
+	@Override
+	public ElementResolver childResolver(By childByWithin) {
+		return new ByElementResolver(browser, new ByChained(by, childByWithin));
+	}
+
+	@Override
+	public String toString() {
+		return by.toString();
+	}
 }

@@ -29,36 +29,39 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import java.lang.reflect.Constructor;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
- * Factory to create any page object.
- * Should not be used directly in your test code.
- * 
- * Either use create methods on your {@link WebTest} or {@link Browser} or on {@link PageObject} instead to always create objects in correct context.
+ * An ElementResolver for an already resolved element.
  */
-public class PageObjectFactory {
+class PreLoadedElementResolver implements ElementResolver {
 	
-	/**
-	 * Create a page object as root page object directly using the html body as the POs context element.
-	 * @return the created root Page Object.
-	 */
-	public static <T extends PageObject> T create(Class<T> clazz) {
-		return createInternal(clazz, new HtmlElement(By.tagName("body")));
-	}
-		
-	/**
-	 * Only for internal usage.
-	 */
-	static <T extends PageObject> T createInternal(Class<T> clazz, HtmlElement element) {
-		try {
-			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
-			return constructor.newInstance(element);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
+	private WebElement element;
+
+	public PreLoadedElementResolver(WebElement element) {
+		if (element == null) {
+			throw new IllegalArgumentException("Not allowed to construct ElementWrapper with element='null'.");
 		}
+		this.element = element;
 	}
 
+	@Override
+	public List<WebElement> resolve() {
+		return new LinkedList<WebElement>(Arrays.asList(element));
+	}
+	
+	@Override
+	public ElementResolver childResolver(By childByWithin) {
+		return new SubElementResolver(element, childByWithin);
+	}
+
+	@Override
+	public String toString() {
+		return WebElementFormatter.format(element);
+	}
 }

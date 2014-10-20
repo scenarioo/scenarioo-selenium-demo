@@ -100,53 +100,31 @@ public class Browser {
 	}
 
 	/**
-	 * Create a page component of concrete type for later use (the component does not necessarily have to exist in the
-	 * browser, can be precreated before it realy exists, which might be helpfull to test for dynamic created page
-	 * components for existance etc.).
-	 * 
-	 * This should be the usual way to create components.
+	 * Only for internal usage in HtmlElement
 	 */
-	public <T extends PageObject> T create(Class<T> clazz, By by) {
-		return PageObjectFactory.create(clazz, by);
-	}
-
-	/**
-	 * Find a list of page components of a concrete type. Finding is only possible as soon as the components have realy
-	 * been created.
-	 * 
-	 * Do not use this method to check that no component exists, use {@link #assertElementDoesNotExist(By)} to check
-	 * that none is existing.
-	 */
-	public <T extends PageObject> List<T> find(Class<T> clazz, By by) {
-		List<T> result = new ArrayList<T>();
-		List<HtmlElement> elements = findElements(by);
-		for (HtmlElement element : elements) {
-			result.add(PageObjectFactory.createInternal(clazz, element));
-		}
-		return result;
+	<T extends PageObject> T create(Class<T> clazz, ElementResolver elementResolver) {
+		return PageObjectFactory.createInternal(clazz, new HtmlElement(elementResolver));
 	}
 
 	/**
 	 * Only for internal usage in HtmlElement
 	 */
-	WebElement findElementInternal(final By by) {
-		final List<WebElement> elements = driver.findElements(by);
-		if (elements.size() > 1) {
-			fail("More than one element found for by = " + by);
-		} else if (elements.size() == 0) {
-			fail("No element found for by = " + by);
+	<T extends PageObject> List<T> find(Class<T> clazz, ElementResolver elementResolver) {
+		List<T> result = new ArrayList<T>();
+		List<HtmlElement> elements = findElements(elementResolver);
+		for (HtmlElement element : elements) {
+			result.add(PageObjectFactory.createInternal(clazz, element));
 		}
-		return elements.get(0);
+		return result;
 	}
-
-
+	
 	/**
 	 * Only for internal usage, will fail if there is not at least one element.
 	 */
-	List<HtmlElement> findElements(final By by) {
-		List<WebElement> elements = driver.findElements(by);
+	List<HtmlElement> findElements(final ElementResolver elementResolver) {
+		List<WebElement> elements = elementResolver.resolve();
 		if (elements.isEmpty()) {
-			fail("No HtmlElement found with by = " + by);
+			fail("No HtmlElement found with " + elementResolver);
 		}
 		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		for (WebElement elem : elements) {
@@ -154,5 +132,13 @@ public class Browser {
 		}
 		return result;
 	}
+
+	/**
+	 * Only for internal usage in ElementResolver
+	 */
+	List<WebElement> findElementsInternal(final By by) {
+		return driver.findElements(by);
+	}
+
 
 }

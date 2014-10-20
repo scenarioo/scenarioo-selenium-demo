@@ -29,36 +29,38 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import java.lang.reflect.Constructor;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.pagefactory.ByChained;
 
 /**
- * Factory to create any page object.
- * Should not be used directly in your test code.
- * 
- * Either use create methods on your {@link WebTest} or {@link Browser} or on {@link PageObject} instead to always create objects in correct context.
+ * Describes a list of elements using an already resolved parent element and a relative By selector.
  */
-public class PageObjectFactory {
+class SubElementResolver implements ElementResolver {
 	
-	/**
-	 * Create a page object as root page object directly using the html body as the POs context element.
-	 * @return the created root Page Object.
-	 */
-	public static <T extends PageObject> T create(Class<T> clazz) {
-		return createInternal(clazz, new HtmlElement(By.tagName("body")));
+	private WebElement parent;
+	private By byWithinElement;
+	
+	public SubElementResolver(WebElement parent, By byWithinElement) {
+		this.parent = parent;
+		this.byWithinElement = byWithinElement;
 	}
-		
-	/**
-	 * Only for internal usage.
-	 */
-	static <T extends PageObject> T createInternal(Class<T> clazz, HtmlElement element) {
-		try {
-			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
-			return constructor.newInstance(element);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
-		}
+
+	@Override
+	public List<WebElement> resolve() {
+		return parent.findElements(byWithinElement);
+	}
+	
+	@Override
+	public ElementResolver childResolver(By childByWithin) {
+		return new SubElementResolver(parent, new ByChained(this.byWithinElement, childByWithin));
+	}
+
+	@Override
+	public String toString() {
+		return WebElementFormatter.format(parent) + " " + byWithinElement.toString();
 	}
 
 }

@@ -29,36 +29,29 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import java.lang.reflect.Constructor;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
- * Factory to create any page object.
- * Should not be used directly in your test code.
- * 
- * Either use create methods on your {@link WebTest} or {@link Browser} or on {@link PageObject} instead to always create objects in correct context.
+ * Encapsulates different strategies to resolve an element in the DOM tree. This enables lazy resolution of elements in a uniform way.
  */
-public class PageObjectFactory {
+interface ElementResolver {
+
+	/**
+	 * Finds the currently existing elements described by this ElementResolver
+	 */
+	public List<WebElement> resolve();
 	
 	/**
-	 * Create a page object as root page object directly using the html body as the POs context element.
-	 * @return the created root Page Object.
+	 * Creates a new ElementResolver that describes child elements of the elements described by this ElementResolver
 	 */
-	public static <T extends PageObject> T create(Class<T> clazz) {
-		return createInternal(clazz, new HtmlElement(By.tagName("body")));
-	}
-		
+	public ElementResolver childResolver(By childByWithin);
+	
 	/**
-	 * Only for internal usage.
+	 * Provides a nice string representation that describes the elements
 	 */
-	static <T extends PageObject> T createInternal(Class<T> clazz, HtmlElement element) {
-		try {
-			Constructor<T> constructor = clazz.getConstructor(HtmlElement.class);
-			return constructor.newInstance(element);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create pagecomponent for element = " + element, e);
-		}
-	}
+	public String toString();
 
 }
