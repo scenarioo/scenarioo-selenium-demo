@@ -29,6 +29,7 @@
 
 package org.scenarioo.selenium.infrastructure;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -39,6 +40,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.scenarioo.selenium.infrastructure.components.PageComponent;
+
+import com.google.common.collect.Lists;
 
 /**
  * Wrapper for a {@link By} or a {@link WebElement} to provide operations on the identified element to implement page
@@ -150,12 +153,17 @@ public final class HtmlElement {
 			}
 		});
 	}
+	
+	public void assertCssClass(String expectedCssClass) {
+		List<String> cssClasses = getCssClasses();
+		assertTrue("Expected CSS class " + expectedCssClass + ", found " + cssClasses, cssClasses.contains(expectedCssClass));
+	}
 
-	public String[] getCssClasses() {
-		return callOperation(new ElementOperation<String[]>() {
+	private List<String> getCssClasses() {
+		return callOperation(new ElementOperation<List<String>>() {
 			@Override
-			public String[] call(WebElement elem) {
-				return elem.getAttribute("class").split(" ");
+			public List<String> call(WebElement elem) {
+				return Lists.newArrayList(elem.getAttribute("class").split(" "));
 			}
 		});
 	}

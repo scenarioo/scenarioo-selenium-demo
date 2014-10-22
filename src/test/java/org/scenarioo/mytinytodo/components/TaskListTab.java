@@ -20,6 +20,11 @@ public class TaskListTab extends PageComponent {
 
 	public void select() {
 		title.click();
+		assertIsSelected();
+	}
+	
+	public void assertIsSelected() {
+		element.assertCssClass("mtt-tabs-selected");
 	}
 
 }
