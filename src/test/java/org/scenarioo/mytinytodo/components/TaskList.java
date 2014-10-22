@@ -10,7 +10,7 @@ public class TaskList extends List<TaskListItem>{
 	}
 
 	public void assertTaskExists(String title) {
-		assertExists(taskItem -> taskItem.getTitle().equals(title));
+		assertItemExists(taskItem -> taskItem.getTitle().equals(title));
 	}
 	
 	public TaskListItem find(String title) {

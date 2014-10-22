@@ -12,7 +12,7 @@ public class TagList extends List<Link> {
 	}
 
 	public void assertTagExists(String tag) {
-		assertExists(link -> link.getText().equals(tag));
+		assertItemExists(link -> link.getText().equals(tag));
 	}
 	
 	public void selectTag(String tag) {

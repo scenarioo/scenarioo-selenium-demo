@@ -44,7 +44,7 @@ public abstract class List<T extends PageComponent> extends PageComponent {
 		this.itemClass = itemClass;
 	}
 	
-	public void assertExists(Predicate<T> selector) {
+	public void assertItemExists(Predicate<T> selector) {
 		try {
 			find(selector);
 		} catch (NoSuchElementException e) {
