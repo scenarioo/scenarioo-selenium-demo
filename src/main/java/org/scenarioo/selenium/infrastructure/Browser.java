@@ -112,11 +112,14 @@ public class Browser {
 	}
 
 	/**
-	 * Only for internal usage in HtmlElement
+	 * Only for internal usage in HtmlElement, will fail if there is not at least one element.
 	 */
 	<T extends PageObject> List<T> find(Class<T> clazz, ElementResolver elementResolver) {
 		List<T> result = new ArrayList<T>();
 		List<HtmlElement> elements = findElements(elementResolver);
+		if (elements.isEmpty()) {
+			fail("No HtmlElement found with " + elementResolver);
+		}
 		for (HtmlElement element : elements) {
 			result.add(PageObjectFactory.createInternal(clazz, element));
 		}
@@ -124,13 +127,10 @@ public class Browser {
 	}
 	
 	/**
-	 * Only for internal usage, will fail if there is not at least one element.
+	 * Only for internal usage.
 	 */
 	List<HtmlElement> findElements(final ElementResolver elementResolver) {
 		List<WebElement> elements = elementResolver.resolve();
-		if (elements.isEmpty()) {
-			fail("No HtmlElement found with " + elementResolver);
-		}
 		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		for (WebElement elem : elements) {
 			result.add(new HtmlElement(elem));

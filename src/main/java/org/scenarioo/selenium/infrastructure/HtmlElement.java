@@ -119,14 +119,7 @@ public final class HtmlElement {
 	}
 
 	public boolean exists() {
-		// clear cash in this case to force resolve again.
-		cachedElement = null;
-		return callOperation(new ElementOperation<Boolean>() {
-			@Override
-			public Boolean call(WebElement elem) {
-				return elem != null;
-			}
-		});
+		return !getBrowser().findElements(elementResolver).isEmpty();
 	}
 
 	public boolean isSelected() {
