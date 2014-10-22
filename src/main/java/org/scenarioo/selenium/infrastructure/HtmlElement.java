@@ -234,6 +234,14 @@ public final class HtmlElement {
 	public <T extends PageObject> List<T> find(Class<T> clazz, final By byWithinElement) {
 		return getBrowser().find(clazz, elementResolver.childResolver(byWithinElement));
 	}
+
+	/**
+	 * Assert that a sub element of this HtmlElement (specified by byWithinElement) does not exist in the current DOM.
+	 */
+	public void assertElementDoesNotExist(By byWithinElement) {
+		List<HtmlElement> elements = getBrowser().findElements(elementResolver.childResolver(byWithinElement));
+		assertTrue("Expected 0 elements, but found " + elements.size(), elements.isEmpty());
+	}
 	
 
 	/**

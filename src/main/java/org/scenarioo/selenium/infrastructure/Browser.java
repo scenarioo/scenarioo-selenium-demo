@@ -34,6 +34,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
@@ -95,6 +96,10 @@ public class Browser {
 	
 	public Actions createActions() {
 		return new Actions(driver);
+	}
+	
+	public Alert switchToAlert() {
+		return driver.switchTo().alert();
 	}
 
 	/**

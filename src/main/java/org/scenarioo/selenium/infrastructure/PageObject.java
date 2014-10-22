@@ -78,11 +78,17 @@ public class PageObject {
 	 * 
 	 * Usually, components created with this method should be rather short-lived, since they are based on unstable WebElements.
 	 * 
-	 * Do not use this method to check that no component exists, use {@link #assertElementDoesNotExist(By)} to check
-	 * that none is existing.
+	 * Do not use this method to check that no component exists, use {@link #assertElementDoesNotExist(By)} instead.
 	 */
 	protected <T extends PageComponent> List<T> find(Class<T> clazz, final By byWithinElement) {
 		return element.find(clazz, byWithinElement);
+	}
+	
+	/**
+	 * Assert that an element within the scope of this PageObject does not exist.
+	 */
+	protected void assertElementDoesNotExist(final By byWithinElement) {
+		element.assertElementDoesNotExist(byWithinElement);
 	}
 
 }

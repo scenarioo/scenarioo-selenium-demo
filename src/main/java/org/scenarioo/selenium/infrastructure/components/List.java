@@ -52,6 +52,10 @@ public abstract class List<T extends PageComponent> extends PageComponent {
 		}
 	}
 	
+	public void assertIsEmpty() {
+		assertElementDoesNotExist(getItemSelector());
+	}
+	
 	public T find(Predicate<T> selector) {
 		for (T item : findAllItems()) {
 			if (selector.apply(item)) {

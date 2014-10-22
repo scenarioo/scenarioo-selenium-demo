@@ -5,12 +5,15 @@ import org.scenarioo.mytinytodo.components.TaskListTabBar;
 import org.scenarioo.selenium.infrastructure.HtmlElement;
 import org.scenarioo.selenium.infrastructure.PageObject;
 import org.scenarioo.selenium.infrastructure.components.Button;
+import org.scenarioo.selenium.infrastructure.components.Prompt;
 
 public class TaskListsPage extends PageObject {
 
 	private TaskListTabBar listsTabBar = create(TaskListTabBar.class, By.cssSelector("#lists ul"));
 	private Button addListButton = create(Button.class, By.cssSelector("#lists div.mtt-tabs-add-button"));
 	private Button allListsButton = create(Button.class, By.cssSelector("#list_all a"));
+	
+	private Prompt createListPrompt = new Prompt();
 	
 	public TaskListsPage(HtmlElement element) {
 		super(element);
@@ -31,5 +34,8 @@ public class TaskListsPage extends PageObject {
 	
 	public void createTaskList(String title) {
 		addListButton.click();
+		createListPrompt.assertMessage("Create new list");
+		createListPrompt.enter(title);
+		listsTabBar.assertTabExists(title);
 	}
 }

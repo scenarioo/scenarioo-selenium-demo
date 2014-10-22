@@ -14,6 +14,10 @@ public class TaskListTabBar extends List<TaskListTab> {
 		tabToSelect.select();
 	}
 	
+	public void assertTabExists(String title) {
+		assertItemExists(tab -> tab.getTitle().equals(title));
+	}
+	
 	private TaskListTab findByTitle(String title) {
 		return find(tab -> tab.getTitle().equals(title));
 	}

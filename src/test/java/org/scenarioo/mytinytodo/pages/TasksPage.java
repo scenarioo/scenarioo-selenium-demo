@@ -52,4 +52,7 @@ public class TasksPage extends PageObject {
 		taskListItem.assertTags(task.getTags());
 	}
 
+	public void assertIsEmpty() {
+		taskList.assertIsEmpty();
+	}
 }
