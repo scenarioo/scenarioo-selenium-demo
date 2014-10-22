@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -44,7 +45,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
+
+import com.google.common.base.Predicate;
 
 /**
  * Abstraction of the Selenium API to access the browser window inside which the current web test is running.
@@ -100,6 +105,12 @@ public class Browser {
 	
 	public Alert switchToAlert() {
 		return driver.switchTo().alert();
+	}
+	
+	public void waitUntil(Predicate<Browser> until) {
+		new FluentWait<Browser>(this)
+			.withTimeout(10, TimeUnit.SECONDS)
+			.until(until);
 	}
 
 	/**

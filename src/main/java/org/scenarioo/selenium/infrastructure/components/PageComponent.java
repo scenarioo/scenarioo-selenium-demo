@@ -64,5 +64,8 @@ public abstract class PageComponent extends PageObject {
 		assertFalse("Element expected not to exist: " + element, element.exists());
 	}
 
+	public void waitUntilElementDoesNotExist() {
+		getBrowser().waitUntil(browser -> !element.exists());
+	}
 }
 
