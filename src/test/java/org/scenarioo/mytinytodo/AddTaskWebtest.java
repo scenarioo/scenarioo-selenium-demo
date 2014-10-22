@@ -1,6 +1,5 @@
 package org.scenarioo.mytinytodo;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.scenarioo.mytinytodo.pages.EditTaskPage;
@@ -41,5 +40,12 @@ public class AddTaskWebtest extends WebTest {
 		editTaskPage.assertFormPrefilled(Task.SIMPLE2);
 		editTaskPage.enter(Task.SIMPLE2_WITHTAGS);
 		tasksPage.assertTaskWithTags(Task.SIMPLE2_WITHTAGS);
+	}
+	
+	@Test
+	public void addQuickTaskWithSmartSyntax() {
+		taskListsPage.start();
+		tasksPage.createQuickTask("/0/ Simple task 3 /tag1, tag2/");
+		tasksPage.assertTaskWithTags(Task.SIMPLE3_WITHTAGS);
 	}
 }
