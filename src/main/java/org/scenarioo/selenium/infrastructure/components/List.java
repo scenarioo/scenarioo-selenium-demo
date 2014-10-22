@@ -79,6 +79,7 @@ public abstract class List<T extends PageComponent> extends PageComponent {
 	 * @return A By selector for the list items, relative to the List element
 	 */
 	protected By getItemSelector() {
+		// TODO scenarioo/scenarioo#359 this should be an abstract template method
 		return By.tagName("li");
 	}
 }
