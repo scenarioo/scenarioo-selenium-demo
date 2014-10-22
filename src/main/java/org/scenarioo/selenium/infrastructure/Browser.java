@@ -35,10 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
@@ -57,7 +60,9 @@ public class Browser {
 	 * Get a browser with a new selenium web driver to run your tests in a firefox browser.
 	 */
 	public static Browser createFirefoxDriver() {
-		EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(new FirefoxDriver());
+		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+		capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+		EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(new FirefoxDriver(capabilities));
 		eventFiringDriver.register(new WebDriverListenerAdapter());
 		return new Browser(eventFiringDriver);
 	}

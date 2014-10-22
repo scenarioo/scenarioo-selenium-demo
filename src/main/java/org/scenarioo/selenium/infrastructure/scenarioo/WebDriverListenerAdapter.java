@@ -3,6 +3,7 @@ package org.scenarioo.selenium.infrastructure.scenarioo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -37,19 +38,23 @@ public class WebDriverListenerAdapter implements WebDriverEventListener {
 	}
 
 	private void writeStep(WebDriver driver) {
-		Step step = new Step();
-		Page page = new Page(driver.getTitle());
-		step.setPage(page);
-		StepHtml stepHtml = new StepHtml(driver.getPageSource());
-		step.setHtml(stepHtml);
-		StepDescription stepDescription = new StepDescription();
-		int stepIndex = context.getNextStepIndex();
-		stepDescription.setIndex(stepIndex);
-		byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-		writer.saveScreenshotAsPng(context.getCurrentUseCase(), context.getCurrentScenario(), stepIndex, screenshot);
-		step.setStepDescription(stepDescription);
-		
-		writer.saveStep(context.getCurrentUseCase(), context.getCurrentScenario(), step);
+		try {
+			Step step = new Step();
+			Page page = new Page(driver.getTitle());
+			step.setPage(page);
+			StepHtml stepHtml = new StepHtml(driver.getPageSource());
+			step.setHtml(stepHtml);
+			StepDescription stepDescription = new StepDescription();
+			int stepIndex = context.getNextStepIndex();
+			stepDescription.setIndex(stepIndex);
+			byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+			writer.saveScreenshotAsPng(context.getCurrentUseCase(), context.getCurrentScenario(), stepIndex, screenshot);
+			step.setStepDescription(stepDescription);
+			
+			writer.saveStep(context.getCurrentUseCase(), context.getCurrentScenario(), step);
+		} catch (UnhandledAlertException e) {
+			// TODO is there something we can do in case of a javascript alert/confirm/prompt?
+		}
 	}
 
 	@Override
