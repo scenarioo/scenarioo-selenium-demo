@@ -128,6 +128,13 @@ public class Browser {
 	}
 
 	/**
+	 * Only for internal usage in HtmlElement
+	 */
+	<T extends PageObject> T create(Class<T> clazz, By by) {
+		return PageObjectFactory.createInternal(clazz, new HtmlElement(by));
+	}
+
+	/**
 	 * Only for internal usage in HtmlElement, will fail if there is not at least one element.
 	 */
 	<T extends PageObject> List<T> find(Class<T> clazz, ElementResolver elementResolver) {

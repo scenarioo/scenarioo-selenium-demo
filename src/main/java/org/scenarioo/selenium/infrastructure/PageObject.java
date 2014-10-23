@@ -71,6 +71,13 @@ public class PageObject {
 		return element.create(clazz, byWithinElement);
 	}
 
+	/**
+	 * On rare occasions, it is necessary to create a PageObject in the global scope. E.g. context menus, tooltips (or similar) are often placed at 
+	 * different positions of the DOM tree than the components which they logically belong to. {@link #createInGlobalScope(Class, By)} can be used in such situations.
+	 */
+	protected <T extends PageObject> T createInGlobalScope(Class<T> clazz, final By by) {
+		return getBrowser().create(clazz, by);
+	}
 
 	/**
 	 * Find page components of a concrete type inside the scope of this component. As opposed to {@link HtmlElement#create(Class, By)}, finding is only 
