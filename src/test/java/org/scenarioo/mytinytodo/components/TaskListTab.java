@@ -8,7 +8,8 @@ import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
 public class TaskListTab extends PageComponent {
 	private Button title = create(Button.class, By.tagName("span"));
-//	private ContextMenu menu = create(ContextMenu.class, By.tagName("ul"));
+	private Button contextMenuToggle = create(Button.class, By.cssSelector("div.list-action"));
+	private TaskListContextMenu contextMenu = createInGlobalScope(TaskListContextMenu.class, By.cssSelector("#listmenucontainer ul"));
 	
 	public TaskListTab(HtmlElement element) {
 		super(element);
@@ -25,6 +26,17 @@ public class TaskListTab extends PageComponent {
 	
 	public void assertIsSelected() {
 		element.assertCssClass("mtt-tabs-selected");
+	}
+	
+	public TaskListContextMenu openContextMenu() {
+		contextMenuToggle.click();
+		contextMenu.assertIsDisplayed();
+		return contextMenu;
+	}
+	
+	public void closeContextMenu() {
+		contextMenuToggle.click();
+		contextMenu.assertIsNotDisplayed();
 	}
 
 }

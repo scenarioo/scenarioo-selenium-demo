@@ -52,6 +52,15 @@ public abstract class List<T extends PageComponent> extends PageComponent {
 		}
 	}
 	
+	public void assertItemDoesNotExist(Predicate<T> selector) {
+		try {
+			find(selector);
+			Assert.fail("Expected list item with given selector to not exist, but exists.");
+		} catch (NoSuchElementException e) {
+			// success
+		}
+	}
+	
 	public void assertIsEmpty() {
 		assertElementDoesNotExist(getItemSelector());
 	}

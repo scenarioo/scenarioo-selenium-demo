@@ -8,17 +8,16 @@ public class TaskListTabBar extends List<TaskListTab> {
 	public TaskListTabBar(HtmlElement element) {
 		super(element, TaskListTab.class);
 	}
-
-	public void selectTab(String title) {
-		TaskListTab tabToSelect = findByTitle(title);
-		tabToSelect.select();
-	}
 	
 	public void assertTabExists(String title) {
 		assertItemExists(tab -> tab.getTitle().equals(title));
 	}
 	
-	private TaskListTab findByTitle(String title) {
+	public void assertTabDoesNotExist(String title) {
+		assertItemDoesNotExist(tab -> tab.getTitle().equals(title));
+	}
+	
+	public TaskListTab findByTitle(String title) {
 		return find(tab -> tab.getTitle().equals(title));
 	}
 	

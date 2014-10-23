@@ -46,7 +46,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.scenarioo.selenium.infrastructure.scenarioo.WebDriverListenerAdapter;
 
 import com.google.common.base.Predicate;
