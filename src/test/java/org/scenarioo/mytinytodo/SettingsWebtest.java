@@ -4,23 +4,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.scenarioo.mytinytodo.pages.HeaderPage;
 import org.scenarioo.mytinytodo.pages.SettingsPage;
-import org.scenarioo.selenium.infrastructure.WebTest;
 
-public class SettingsWebtest extends WebTest {
+public class SettingsWebtest extends AbstractTinyTodoWebTest {
 	
 	private HeaderPage headerPage;
 	private SettingsPage settingsPage;
 	
 	@Before
-	public void init() {
+	public void setup() {
 		headerPage = create(HeaderPage.class);
 		settingsPage = create(SettingsPage.class);
-
-		getBrowser().navigateTo("http://localhost/mytinytodo/");
 	}
 	
 	@Test
 	public void changeTitle() {
+		start();
 		headerPage.assertTitle("My Tiny Todolist");
 		headerPage.openSettings();
 		settingsPage.changeTitle("My Pretty Fancy Todolist");

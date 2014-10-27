@@ -6,9 +6,8 @@ import org.scenarioo.mytinytodo.pages.EditTaskPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.testdata.Task;
-import org.scenarioo.selenium.infrastructure.WebTest;
 
-public class TaskCreationWebtest extends WebTest {
+public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;
@@ -23,7 +22,7 @@ public class TaskCreationWebtest extends WebTest {
 
 	@Test
 	public void addQuickTask() {
-		taskListsPage.start();
+		start();
 		taskListsPage.showTaskList("Todo");
 		tasksPage.createQuickTask(Task.SIMPLE.getTitle());
 		tasksPage.assertTaskExists(Task.SIMPLE);
@@ -31,7 +30,7 @@ public class TaskCreationWebtest extends WebTest {
 	
 	@Test
 	public void addAdvancedTask() {
-		taskListsPage.start();
+		start();
 		tasksPage.createAdvancedTask(Task.SIMPLE2.getTitle());
 		editTaskPage.assertFormPrefilled(Task.SIMPLE2);
 		editTaskPage.enter(Task.SIMPLE2_WITHTAGS);
@@ -40,7 +39,7 @@ public class TaskCreationWebtest extends WebTest {
 	
 	@Test
 	public void addQuickTaskWithSmartSyntax() {
-		taskListsPage.start();
+		start();
 		tasksPage.createQuickTask("/0/ Simple task 3 /tag1, tag2/");
 		tasksPage.assertTaskWithTags(Task.SIMPLE3_WITHTAGS);
 	}

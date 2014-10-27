@@ -23,11 +23,6 @@ public class TaskListsPage extends PageObject {
 		super(element);
 	}
 
-	public void start() {
-		getBrowser().navigateTo("http://localhost/mytinytodo/");
-		
-	}
-
 	public void showTaskList(String title) {
 		TaskListTab tabToSelect = listsTabBar.findByTitle(title);
 		tabToSelect.select();

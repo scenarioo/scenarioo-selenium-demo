@@ -6,9 +6,8 @@ import org.scenarioo.mytinytodo.pages.EditTaskPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.testdata.Task;
-import org.scenarioo.selenium.infrastructure.WebTest;
 
-public class TaskManagementWebtest extends WebTest {
+public class TaskManagementWebtest extends AbstractTinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;
@@ -23,7 +22,7 @@ public class TaskManagementWebtest extends WebTest {
 
 	@Test
 	public void editTask() {
-		taskListsPage.start();
+		start();
 		taskListsPage.showTaskList("Todo");
 		tasksPage.createQuickTask(Task.SIMPLE1.getTitle());
 		tasksPage.editTask(Task.SIMPLE1);
