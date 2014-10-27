@@ -58,26 +58,10 @@ public class ScenarioDocuWritingRule extends TestWatcher {
 		Scenario scenario = new Scenario();
 		String name = createScenarioName(testMethodDescription);
 		scenario.setName(name);
-		
-		// store description and user role from test method's annotation (if any)
-//		DocuDescription docuDescription = testMethodDescription.getAnnotation(DocuDescription.class);
-//		if (docuDescription != null) {
-//			description = docuDescription.description();
-//			scenario.addDetail("User Role", docuDescription.userRole());
-//		}
-//		scenario.setDescription(description);
-		
 		return scenario;
 	}
 	
 	private String createScenarioName(final Description testMethodDescription) {
-//		DocuDescription description = testMethodDescription.getAnnotation(DocuDescription.class);
-//		if (description != null && !StringUtils.isBlank(description.name())) {
-//			return description.name();
-//		} else {
-//			// simply use the test name as scenario name if not set through
-//			// description annotation.
-//		}
 		return testMethodDescription.getMethodName();
 	}
 	

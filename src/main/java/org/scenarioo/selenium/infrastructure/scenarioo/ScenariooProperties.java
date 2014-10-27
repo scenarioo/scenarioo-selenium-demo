@@ -9,6 +9,10 @@ import org.scenarioo.model.docu.entities.Branch;
 import org.scenarioo.model.docu.entities.Build;
 import org.scenarioo.model.docu.entities.Status;
 
+/**
+ * You would usually do this in a build file to have more options available. 
+ *
+ */
 public class ScenariooProperties {
 	
 	public static final File ROOT_DIRECTORY;

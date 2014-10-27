@@ -2,8 +2,8 @@ package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
+import org.scenarioo.mytinytodo.pages.TasksPage;
 
 public class TaskListsWebtest extends AbstractTinyTodoWebTest {
 	

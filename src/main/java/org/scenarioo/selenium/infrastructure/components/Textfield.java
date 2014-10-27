@@ -45,6 +45,6 @@ public class Textfield extends PageComponent {
 	}
 	
 	public void assertText(String text) {
-		assertEquals(text, element.getValue());
+		assertEquals("Unexpected text in Textfield " + element, text, element.getValue());
 	}
 }

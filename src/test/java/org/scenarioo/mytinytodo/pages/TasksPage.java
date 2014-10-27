@@ -42,7 +42,7 @@ public class TasksPage extends PageObject {
 		taskListItem.collapseItem();
 	}
 
-	public void editTask(Task task) {
+	public void openTaskForEdit(Task task) {
 		TaskListItem taskListItem = taskList.find(task.getTitle());
 		taskListItem.editTask();
 	}
