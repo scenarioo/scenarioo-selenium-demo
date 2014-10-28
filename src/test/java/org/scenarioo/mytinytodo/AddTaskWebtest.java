@@ -37,7 +37,7 @@ public class AddTaskWebtest extends WebTest {
 	public void addAdvancedTask() {
 		taskListsPage.start();
 		tasksPage.createAdvancedTask(Task.SIMPLE2.getTitle());
-		editTaskPage.assertFormPrefilled(Task.SIMPLE2);
+		editTaskPage.assertFormPrefilled(Task.SIMPLE1);
 		editTaskPage.enter(Task.SIMPLE2_WITHTAGS);
 		tasksPage.assertTaskWithTags(Task.SIMPLE2_WITHTAGS);
 	}
