@@ -1,10 +1,9 @@
 package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
+import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.selenium.infrastructure.WebTest;
 
 public class TaskListsWebtest extends WebTest {
