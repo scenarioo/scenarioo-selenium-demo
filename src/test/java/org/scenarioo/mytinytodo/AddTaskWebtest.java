@@ -27,7 +27,7 @@ public class AddTaskWebtest extends WebTest {
 		taskListsPage.showTaskList("Todo");
 		tasksPage.createQuickTask(Task.SIMPLE1.getTitle());
 		tasksPage.assertTaskExists(Task.SIMPLE1);
-		tasksPage.editTask(Task.SIMPLE1);
+		tasksPage.openTaskForEdit(Task.SIMPLE2);
 		editTaskPage.assertFormPrefilled(Task.SIMPLE1);
 		editTaskPage.enter(Task.SIMPLE1_WITHNOTE);
 		tasksPage.assertTaskWithNote(Task.SIMPLE1_WITHNOTE);
