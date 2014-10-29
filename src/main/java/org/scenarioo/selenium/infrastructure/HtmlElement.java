@@ -239,8 +239,9 @@ public final class HtmlElement {
 	 * Assert that a sub element of this HtmlElement (specified by byWithinElement) does not exist in the current DOM.
 	 */
 	public void assertElementDoesNotExist(By byWithinElement) {
-		List<HtmlElement> elements = getBrowser().findElements(elementResolver.childResolver(byWithinElement));
-		assertTrue("Expected 0 elements, but found " + elements.size(), elements.isEmpty());
+		ElementResolver childResolver = elementResolver.childResolver(byWithinElement);
+		List<HtmlElement> elements = getBrowser().findElements(childResolver);
+		assertTrue("Expected 0 elements " + childResolver + ", but found " + elements.size(), elements.isEmpty());
 	}
 	
 
