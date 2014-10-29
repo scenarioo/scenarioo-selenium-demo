@@ -40,7 +40,6 @@ public class WebElementFormatter {
 		if (StringUtils.isNotBlank(id)) {
 			result += "#" + id;
 		}
-		// TODO format cssClasses in CSS selector syntax
 		String cssClasses = element.getAttribute("class");
 		if (StringUtils.isNotBlank(cssClasses)) {
 			result += " " + cssClasses;
