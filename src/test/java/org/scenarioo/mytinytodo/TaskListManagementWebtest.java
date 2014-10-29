@@ -5,6 +5,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
+import org.scenarioo.selenium.infrastructure.db.Dataset;
+import org.scenarioo.selenium.infrastructure.db.DatasetDefinition;
 
 public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	
@@ -22,23 +24,23 @@ public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	public void createTaskList() {
 		// TODO Exercise 1: fix me!
 		start();
-		taskListsPage.createTaskList("Todo 2");
+		taskListsPage.createTaskList("Todo 2");		
 		tasksPage.assertIsEmpty();
 	}
 	
+	@Dataset(DatasetDefinition.MANY_PREDEFINED_LISTS_AND_TASKS)
 	@Test
 	public void renameTaskList() {
 		start();
-		taskListsPage.createTaskList("Todo with spelling mstake");
-		taskListsPage.showTaskList("Todo with spelling mstake");
-		taskListsPage.renameSelectedTaskList("Todo without spelling mistake");
+		taskListsPage.showTaskList("Todos with spelling mstake");
+		taskListsPage.renameSelectedTaskList("Todos without spelling mistake");
 	}
-	
+
+	@Dataset(DatasetDefinition.MANY_PREDEFINED_LISTS_AND_TASKS)
 	@Test
 	public void deleteTaskList() {
 		start();
-		taskListsPage.createTaskList("Todo to be removed");
-		taskListsPage.showTaskList("Todo to be removed");
+		taskListsPage.showTaskList("Todos to be deleted");		
 		taskListsPage.deleteSelectedTaskList();
 	}
 }

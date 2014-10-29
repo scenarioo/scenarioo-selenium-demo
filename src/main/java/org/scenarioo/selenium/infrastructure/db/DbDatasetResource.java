@@ -38,7 +38,7 @@ public class DbDatasetResource implements TestRule {
     };
 
     protected void after(Description description) {
-    	// currently does nothing, but could be helpfull for afterwards cleanup if wanted.
+    	// currently does nothing, but could be helpful for afterwards cleanup if wanted.
     };
 
 	
@@ -50,7 +50,8 @@ public class DbDatasetResource implements TestRule {
         IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
         // Insert the dataset in database.
-        IDataSet dataSet = getDataset(testDescription);
+        DatasetDefinition datasetDef = getDatasetDefinitionForMethodUnderTest(testDescription);
+        IDataSet dataSet = getDataset(datasetDef);
         try
         {
             DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
@@ -61,8 +62,19 @@ public class DbDatasetResource implements TestRule {
         }				
 	}
 
-	private IDataSet getDataset(Description testDescription) throws DataSetException, FileNotFoundException {		
-		return new FlatXmlDataSetBuilder().build(getClass().getResourceAsStream("/datasets/default-dataset.xml"));		
+	private DatasetDefinition getDatasetDefinitionForMethodUnderTest(
+			Description testDescription) {
+		Dataset dataset = testDescription.getAnnotation(Dataset.class);
+		if (dataset == null || dataset.value() == null) {
+			return DatasetDefinition.DEFAULT;			
+		}
+		else {
+			return dataset.value();
+		}		
+	}
+
+	private IDataSet getDataset(DatasetDefinition datasetDef) throws DataSetException, FileNotFoundException {		
+		return new FlatXmlDataSetBuilder().build(getClass().getResourceAsStream("/datasets/" + datasetDef.getFilename()));		
 	}	
 
 }

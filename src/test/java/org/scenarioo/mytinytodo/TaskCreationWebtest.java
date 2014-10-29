@@ -6,6 +6,8 @@ import org.scenarioo.mytinytodo.pages.EditTaskPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.testdata.Task;
+import org.scenarioo.selenium.infrastructure.db.Dataset;
+import org.scenarioo.selenium.infrastructure.db.DatasetDefinition;
 
 public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
 	
@@ -20,6 +22,7 @@ public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
 		editTaskPage = create(EditTaskPage.class);
 	}
 
+	@Dataset(DatasetDefinition.EMPTY)
 	@Test
 	public void addQuickTask() {
 		start();
@@ -36,7 +39,7 @@ public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
 		editTaskPage.enter(Task.SIMPLE2_WITHTAGS);
 		tasksPage.assertTaskWithTags(Task.SIMPLE2_WITHTAGS);
 	}
-	
+		
 	@Test
 	public void addQuickTaskWithSmartSyntax() {
 		start();
