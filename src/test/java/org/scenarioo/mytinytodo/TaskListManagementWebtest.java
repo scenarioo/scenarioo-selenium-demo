@@ -20,7 +20,7 @@ public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	@Test
 	@Ignore("Fails... but why?!")
 	public void createTaskList() {
-		// TODO Exercise 1: fix me!
+		// TODO Exercise 1.1: fix me!
 		start();
 		taskListsPage.createTaskList("Todo 2");
 		tasksPage.assertIsEmpty();
@@ -35,10 +35,9 @@ public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	}
 	
 	@Test
+	@Ignore("Not implemented")
 	public void deleteTaskList() {
-		start();
-		taskListsPage.createTaskList("Todo to be removed");
-		taskListsPage.selectTaskList("Todo to be removed");
-		taskListsPage.deleteSelectedTaskList();
+		// TODO Exercise 1.2: create a list and delete it
 	}
+	
 }
