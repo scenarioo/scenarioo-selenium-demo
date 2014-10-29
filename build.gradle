@@ -47,10 +47,9 @@ dependencies {
     compile 'commons-codec:commons-codec:1.2'
     compile 'log4j:log4j:1.2.17'
     compile 'junit:junit:4.11'
+    compile 'org.dbunit:dbunit:2.5.0'
+    compile 'mysql:mysql-connector-java:5.1.16'
 }
-
-
-
 
 task wrapper(type: Wrapper) {
 }	

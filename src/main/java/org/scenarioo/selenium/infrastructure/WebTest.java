@@ -29,8 +29,12 @@
 
 package org.scenarioo.selenium.infrastructure;
 
+import org.dbunit.DBTestCase;
+import org.dbunit.PropertiesBasedJdbcDatabaseTester;
+import org.dbunit.dataset.IDataSet;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.scenarioo.selenium.infrastructure.db.DbDatasetResource;
 import org.scenarioo.selenium.infrastructure.scenarioo.ScenarioDocuWritingRule;
 import org.scenarioo.selenium.infrastructure.scenarioo.UseCaseDocuWritingRule;
 
@@ -40,6 +44,9 @@ import org.scenarioo.selenium.infrastructure.scenarioo.UseCaseDocuWritingRule;
  * Provides most basic functionality needed in any web test. Use page objects and components for accessing the content of the web pages.
  */
 public class WebTest {
+	
+	@Rule
+	public DbDatasetResource dbSetup = new DbDatasetResource();
 	
 	@Rule
 	public BrowserResource browserResource = new BrowserResource();
@@ -69,6 +76,5 @@ public class WebTest {
 	public <T extends PageObject> T create(Class<T> clazz) {
 		return PageObjectFactory.create(clazz);
 	}
-
 	
 }
