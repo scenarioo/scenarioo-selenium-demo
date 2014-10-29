@@ -23,7 +23,7 @@ public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
 	@Test
 	public void addQuickTask() {
 		start();
-		taskListsPage.showTaskList("Todo");
+		taskListsPage.selectTaskList("Todo");
 		tasksPage.createQuickTask(Task.SIMPLE.getTitle());
 		tasksPage.assertTaskExists(Task.SIMPLE);
 	}

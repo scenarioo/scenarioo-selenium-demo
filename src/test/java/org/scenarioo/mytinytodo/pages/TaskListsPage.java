@@ -22,7 +22,7 @@ public class TaskListsPage extends PageObject {
 		super(element);
 	}
 
-	public void showTaskList(String title) {
+	public void selectTaskList(String title) {
 		TaskListTab tabToSelect = listsTabBar.findByTitle(title);
 		tabToSelect.select();
 	}

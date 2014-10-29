@@ -30,7 +30,7 @@ public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	public void renameTaskList() {
 		start();
 		taskListsPage.createTaskList("Todo with spelling mstake");
-		taskListsPage.showTaskList("Todo with spelling mstake");
+		taskListsPage.selectTaskList("Todo with spelling mstake");
 		taskListsPage.renameSelectedTaskList("Todo without spelling mistake");
 	}
 	
@@ -38,7 +38,7 @@ public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	public void deleteTaskList() {
 		start();
 		taskListsPage.createTaskList("Todo to be removed");
-		taskListsPage.showTaskList("Todo to be removed");
+		taskListsPage.selectTaskList("Todo to be removed");
 		taskListsPage.deleteSelectedTaskList();
 	}
 }

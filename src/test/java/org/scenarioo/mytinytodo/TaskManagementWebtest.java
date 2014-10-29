@@ -23,7 +23,7 @@ public class TaskManagementWebtest extends AbstractTinyTodoWebTest {
 	@Test
 	public void editTask() {
 		start();
-		taskListsPage.showTaskList("Todo");
+		taskListsPage.selectTaskList("Todo");
 		tasksPage.createQuickTask(Task.SIMPLE1.getTitle());
 		tasksPage.openTaskForEdit(Task.SIMPLE1);
 		editTaskPage.assertFormPrefilled(Task.SIMPLE1);
