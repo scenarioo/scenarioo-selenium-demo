@@ -1,6 +1,7 @@
 package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
@@ -17,10 +18,11 @@ public class TaskListsWebtest extends AbstractTinyTodoWebTest {
 	}
 	
 	@Test
+	@Ignore("Fails... but why?!")
 	public void createTaskList() {
+		// TODO Exercise 1: fix me!
 		start();
 		taskListsPage.createTaskList("Todo 2");
-		taskListsPage.showTaskList("Todo 2");
 		tasksPage.assertIsEmpty();
 	}
 	
