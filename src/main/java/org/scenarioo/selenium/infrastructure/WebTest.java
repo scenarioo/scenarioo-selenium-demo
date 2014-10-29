@@ -29,13 +29,12 @@
 
 package org.scenarioo.selenium.infrastructure;
 
-import org.dbunit.DBTestCase;
-import org.dbunit.PropertiesBasedJdbcDatabaseTester;
-import org.dbunit.dataset.IDataSet;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.scenarioo.selenium.infrastructure.db.DbDatasetResource;
 import org.scenarioo.selenium.infrastructure.scenarioo.ScenarioDocuWritingRule;
+import org.scenarioo.selenium.infrastructure.scenarioo.ScenariooContext;
 import org.scenarioo.selenium.infrastructure.scenarioo.UseCaseDocuWritingRule;
 
 /**
@@ -63,6 +62,11 @@ public class WebTest {
 	@Rule
 	public ScenarioDocuWritingRule scenarioWritingRule = new ScenarioDocuWritingRule();
 	
+	@Before
+	public void cleanContext() {
+		ScenariooContext.reset();
+	}
+	
 	/**
 	 * Direct access to current browser.
 	 */
@@ -76,5 +80,6 @@ public class WebTest {
 	public <T extends PageObject> T create(Class<T> clazz) {
 		return PageObjectFactory.create(clazz);
 	}
-	
+
+
 }

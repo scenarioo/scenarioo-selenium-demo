@@ -19,6 +19,10 @@ public class ScenariooContext {
 		return CONTEXT.get();
 	}
 
+	public static void reset() {
+		CONTEXT.set(new ScenariooContext());
+	}
+	
 	public String getCurrentUseCase() {
 		return currentUseCase;
 	}

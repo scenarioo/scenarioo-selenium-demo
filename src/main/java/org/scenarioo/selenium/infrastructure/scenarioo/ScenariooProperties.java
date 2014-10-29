@@ -38,7 +38,7 @@ public class ScenariooProperties {
 	}
 	
 	private static String createBuildName() {
-		return new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss").format(BUILD_DATE);
+		return new SimpleDateFormat("yyyy-MM-dd_hhmmss").format(BUILD_DATE);
 	}
 
 	public static void writeSuccessBuildDescription() {
@@ -55,6 +55,7 @@ public class ScenariooProperties {
 		Build build = new Build(BUILD_NAME);
 		build.setStatus(status);
 		build.setDate(BUILD_DATE);
+		build.setRevision("453453");
 		writer.saveBuildDescription(build);
 	}
 }
