@@ -28,13 +28,15 @@ public class TaskListsWebtest extends AbstractTinyTodoWebTest {
 	public void renameTaskList() {
 		start();
 		taskListsPage.createTaskList("Todo with spelling mstake");
-		taskListsPage.renameTaskList("Todo with spelling mstake", "Todo without spelling mistake");
+		taskListsPage.showTaskList("Todo with spelling mstake");
+		taskListsPage.renameSelectedTaskList("Todo without spelling mistake");
 	}
 	
 	@Test
 	public void deleteTaskList() {
 		start();
 		taskListsPage.createTaskList("Todo to be removed");
-		taskListsPage.deleteTaskList("Todo to be removed");
+		taskListsPage.showTaskList("Todo to be removed");
+		taskListsPage.deleteSelectedTaskList();
 	}
 }

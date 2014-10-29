@@ -159,7 +159,7 @@ public final class HtmlElement {
 		assertTrue("Expected CSS class " + expectedCssClass + ", found " + cssClasses, cssClasses.contains(expectedCssClass));
 	}
 
-	private List<String> getCssClasses() {
+	public List<String> getCssClasses() {
 		return callOperation(new ElementOperation<List<String>>() {
 			@Override
 			public List<String> call(WebElement elem) {

@@ -21,4 +21,8 @@ public class TaskListTabBar extends List<TaskListTab> {
 		return find(tab -> tab.getTitle().equals(title));
 	}
 	
+	public TaskListTab findSelectedTab() {
+		return find(tab -> tab.isSelected());
+	}
+	
 }
