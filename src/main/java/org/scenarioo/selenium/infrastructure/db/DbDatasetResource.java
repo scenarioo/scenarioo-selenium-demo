@@ -1,6 +1,5 @@
 package org.scenarioo.selenium.infrastructure.db;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,11 +10,9 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.rules.ExternalResource;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.scenarioo.selenium.infrastructure.Browser;
 
 /**
  * A simple JUnit resource to setup a dataset before each webtest (clean the database, set initial data).
