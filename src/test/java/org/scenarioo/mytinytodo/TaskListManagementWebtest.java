@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 
-public class TaskListsWebtest extends AbstractTinyTodoWebTest {
+public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;
