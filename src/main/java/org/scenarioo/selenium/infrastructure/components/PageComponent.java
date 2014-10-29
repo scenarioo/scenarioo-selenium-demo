@@ -45,7 +45,7 @@ public abstract class PageComponent extends PageObject {
 	}
 
 	/**
-	 * Having asserts directly on components helps to have meaningfull error messages when an assert fails and is
+	 * Having asserts directly on components helps to have meaningful error messages when an assert fails and is
 	 * more convenient to write tests.
 	 */
 	public void assertIsDisplayed() {
@@ -62,6 +62,24 @@ public abstract class PageComponent extends PageObject {
 
 	public void assertNotExists() {
 		assertFalse("Element expected not to exist: " + element, element.exists());
+	}
+
+	/**
+	 * Block until this element is visible
+	 */
+	public void waitUntilElementIsDisplayed() {
+		getBrowser().waitUntil(browser -> element.isDisplayed());
+	}
+
+	public void waitUntilElementIsNotDisplayed() {
+		getBrowser().waitUntil(browser -> !element.isDisplayed());
+	}
+
+	/**
+	 * Block until this element exists in the DOM tree
+	 */
+	public void waitUntilElementExists() {
+		getBrowser().waitUntil(browser -> element.exists());
 	}
 
 	public void waitUntilElementDoesNotExist() {
