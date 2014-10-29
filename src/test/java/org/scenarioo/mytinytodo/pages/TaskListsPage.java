@@ -14,7 +14,6 @@ public class TaskListsPage extends PageObject {
 
 	private TaskListTabBar listsTabBar = create(TaskListTabBar.class, By.cssSelector("#lists ul"));
 	private Button addListButton = create(Button.class, By.cssSelector("#lists div.mtt-tabs-add-button"));
-	private Button allListsButton = create(Button.class, By.cssSelector("#list_all a"));
 	
 	private PromptDialog taskListPrompt = new PromptDialog();
 	private ConfirmDialog taskListConfirm = new ConfirmDialog();
@@ -26,10 +25,6 @@ public class TaskListsPage extends PageObject {
 	public void showTaskList(String title) {
 		TaskListTab tabToSelect = listsTabBar.findByTitle(title);
 		tabToSelect.select();
-	}
-
-	public void showAllTaskLists() {
-		allListsButton.click();
 	}
 	
 	public void createTaskList(String title) {
