@@ -2,10 +2,11 @@ package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.scenarioo.mytinytodo.base.TinyTodoWebTest;
 import org.scenarioo.mytinytodo.pages.HeaderPage;
 import org.scenarioo.mytinytodo.pages.SettingsPage;
 
-public class SettingsWebtest extends AbstractTinyTodoWebTest {
+public class SettingsWebtest extends TinyTodoWebTest {
 	
 	private static final String DEFAULT_TITLE = "My Tiny Todolist";
 	private HeaderPage headerPage;

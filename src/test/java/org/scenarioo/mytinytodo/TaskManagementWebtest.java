@@ -2,12 +2,13 @@ package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.scenarioo.mytinytodo.base.TinyTodoWebTest;
 import org.scenarioo.mytinytodo.pages.EditTaskPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.testdata.Task;
 
-public class TaskManagementWebtest extends AbstractTinyTodoWebTest {
+public class TaskManagementWebtest extends TinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;

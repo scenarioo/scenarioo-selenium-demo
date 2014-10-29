@@ -2,6 +2,7 @@ package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.scenarioo.mytinytodo.base.TinyTodoWebTest;
 import org.scenarioo.mytinytodo.pages.EditTaskPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
@@ -9,7 +10,7 @@ import org.scenarioo.mytinytodo.testdata.Task;
 import org.scenarioo.selenium.infrastructure.db.Dataset;
 import org.scenarioo.selenium.infrastructure.db.DatasetDefinition;
 
-public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
+public class TaskCreationWebtest extends TinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;
@@ -22,7 +23,6 @@ public class TaskCreationWebtest extends AbstractTinyTodoWebTest {
 		editTaskPage = create(EditTaskPage.class);
 	}
 
-	@Dataset(DatasetDefinition.EMPTY)
 	@Test
 	public void addQuickTask() {
 		start();
