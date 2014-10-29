@@ -54,7 +54,7 @@ public class PageObject {
 		this.element = element;
 	}
 	
-	public Browser getBrowser() {
+	protected Browser getBrowser() {
 		return BrowserResource.getBrowser();
 	}
 	

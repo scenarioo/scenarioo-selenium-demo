@@ -10,7 +10,7 @@ TODO put URL from where we forked here
 Preconditions:
 To run this demo, you have to checkout the project 'My-Tiny-TODO-List' under https://github.com/scenarioo/demo-my-tiny-todo
 and have the webapplication up and running, before running the tests (using a PHP server running on localhost).
-TODO Setup needs to be described here!
+TODO Setup needs to be described here (for people that can not or will not use our VM)!
 
 
 

@@ -3,10 +3,11 @@ package org.scenarioo.mytinytodo;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.scenarioo.mytinytodo.base.TinyTodoWebTest;
 import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 
-public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
+public class TaskListManagementWebtest extends TinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;
@@ -31,5 +32,4 @@ public class TaskListManagementWebtest extends AbstractTinyTodoWebTest {
 	public void deleteTaskList() {
 		// TODO Exercise 1.2: create a list and delete it
 	}
-	
 }

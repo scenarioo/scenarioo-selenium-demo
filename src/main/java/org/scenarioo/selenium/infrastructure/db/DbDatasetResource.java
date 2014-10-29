@@ -1,6 +1,5 @@
 package org.scenarioo.selenium.infrastructure.db;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,11 +10,9 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.rules.ExternalResource;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.scenarioo.selenium.infrastructure.Browser;
 
 /**
  * A simple JUnit resource to setup a dataset before each webtest (clean the database, set initial data).
@@ -41,7 +38,7 @@ public class DbDatasetResource implements TestRule {
     };
 
     protected void after(Description description) {
-    	// currently does nothing, but could be helpfull for afterwards cleanup if wanted.
+    	// currently does nothing, but could be helpful for afterwards cleanup if wanted.
     };
 
 	
@@ -53,7 +50,8 @@ public class DbDatasetResource implements TestRule {
         IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
         // Insert the dataset in database.
-        IDataSet dataSet = getDataset(testDescription);
+        DatasetDefinition datasetDef = getDatasetDefinitionForMethodUnderTest(testDescription);
+        IDataSet dataSet = getDataset(datasetDef);
         try
         {
             DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
@@ -64,8 +62,19 @@ public class DbDatasetResource implements TestRule {
         }				
 	}
 
-	private IDataSet getDataset(Description testDescription) throws DataSetException, FileNotFoundException {		
-		return new FlatXmlDataSetBuilder().build(getClass().getResourceAsStream("/datasets/default-dataset.xml"));		
+	private DatasetDefinition getDatasetDefinitionForMethodUnderTest(
+			Description testDescription) {
+		Dataset dataset = testDescription.getAnnotation(Dataset.class);
+		if (dataset == null || dataset.value() == null) {
+			return DatasetDefinition.DEFAULT;			
+		}
+		else {
+			return dataset.value();
+		}		
+	}
+
+	private IDataSet getDataset(DatasetDefinition datasetDef) throws DataSetException, FileNotFoundException {		
+		return new FlatXmlDataSetBuilder().build(getClass().getResourceAsStream("/datasets/" + datasetDef.getFilename()));		
 	}	
 
 }
