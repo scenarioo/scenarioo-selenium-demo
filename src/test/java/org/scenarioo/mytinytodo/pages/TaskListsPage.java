@@ -41,6 +41,6 @@ public class TaskListsPage extends PageObject {
 		contextMenu.deleteList();
 		taskListConfirm.assertMessage("This will delete current list with all tasks in it.\nAre you sure?");
 		taskListConfirm.confirm();
-		// TODO Exercise 1.2: assert that the TaskListTab does not exist anymore
+		// TODO Exercise B: assert that the TaskListTab does not exist anymore
 	}
 }
