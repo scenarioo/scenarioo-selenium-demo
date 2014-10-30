@@ -8,7 +8,7 @@ import org.scenarioo.mytinytodo.pages.TaskListsPage;
 import org.scenarioo.mytinytodo.pages.TasksPage;
 import org.scenarioo.mytinytodo.testdata.Task;
 
-public class TaskCreationWebtest extends TinyTodoWebTest {
+public class TaskCreationWebTest extends TinyTodoWebTest {
 	
 	private TaskListsPage taskListsPage;
 	private TasksPage tasksPage;
