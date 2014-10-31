@@ -1,14 +1,11 @@
 package org.scenarioo.mytinytodo;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.scenarioo.mytinytodo.base.TinyTodoWebTest;
 import org.scenarioo.mytinytodo.pages.HeaderPage;
 import org.scenarioo.mytinytodo.pages.SettingsPage;
 
-// TODO Exercise D: Fix this
-@Ignore("Doesn't work...")
 public class SettingsWebTest extends TinyTodoWebTest {
 	
 	private static final String DEFAULT_TITLE = "My Tiny Todolist";

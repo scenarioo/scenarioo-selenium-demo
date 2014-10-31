@@ -23,6 +23,8 @@ public class SettingsPage extends PageObject {
 
 	private void save() {
 		saveButton.click();
+		// wait until the settings screen disappears
+		saveButton.waitUntilElementDoesNotExist();
 	}
 	
 }
