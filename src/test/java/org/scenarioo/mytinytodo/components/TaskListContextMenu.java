@@ -6,7 +6,7 @@ import org.scenarioo.selenium.infrastructure.HtmlElement;
 import org.scenarioo.selenium.infrastructure.components.PageComponent;
 
 public class TaskListContextMenu extends PageComponent {
-	// TODO Exercise B: use the following line to implement method deleteList()
+	// TODO Exercise 1.2: use the following line to implement method deleteList()
 	// private Button deleteButton = create(Button.class, By.id("btnDeleteList"));
 	
 	public TaskListContextMenu(HtmlElement element) {
@@ -14,7 +14,7 @@ public class TaskListContextMenu extends PageComponent {
 	}
 	
 	public void deleteList() {
-		// TODO Exercise B: implement this
+		// TODO Exercise 1.2: implement this
 		Assert.fail("not implemented");
 	}
 }
