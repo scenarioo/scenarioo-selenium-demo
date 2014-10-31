@@ -45,10 +45,11 @@ public class TaskListsPage extends PageObject {
 	
 	public void deleteSelectedTaskList() {
 		TaskListTab taskListTab = listsTabBar.findSelectedTab();
+		String title = taskListTab.getTitle();
 		TaskListContextMenu contextMenu = taskListTab.openContextMenu();
 		contextMenu.deleteList();
 		taskListConfirm.assertMessage("This will delete current list with all tasks in it.\nAre you sure?");
 		taskListConfirm.confirm();
-		// TODO Exercise 1.2: assert that the TaskListTab does not exist anymore
+		listsTabBar.assertTabDoesNotExist(title);
 	}
 }
