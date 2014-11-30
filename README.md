@@ -4,4 +4,4 @@ This demo is a full featured testing example, that tests a demo web application 
 
 The example is intended as a learning example, useful for workshops and trainings.
 
-For setup instructions please [have a look in our wiki](wiki).
+For setup instructions please [have a look in our wiki](https://github.com/scenarioo/scenarioo-selenium-demo/wiki).
