@@ -28,14 +28,6 @@ public class TaskListManagementWebTest extends TinyTodoWebTest {
 	}
 	
 	@Test
-	public void renameTaskList() {
-		start();
-		taskListsPage.createTaskList("Todo with spelling mstake");
-		taskListsPage.selectTaskList("Todo with spelling mstake");
-		taskListsPage.renameSelectedTaskList("Todo without spelling mistake");
-	}
-	
-	@Test
 	@Ignore("Not implemented")
 	public void deleteTaskList() {
 		// TODO Exercise 1.2: create a list and delete it

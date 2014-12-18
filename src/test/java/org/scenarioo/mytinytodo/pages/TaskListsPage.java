@@ -1,5 +1,6 @@
 package org.scenarioo.mytinytodo.pages;
 
+
 import org.openqa.selenium.By;
 import org.scenarioo.mytinytodo.components.TaskListContextMenu;
 import org.scenarioo.mytinytodo.components.TaskListTab;
@@ -32,15 +33,6 @@ public class TaskListsPage extends PageObject {
 		taskListPrompt.assertMessage("Create new list");
 		taskListPrompt.enter(title);
 		listsTabBar.assertTabExists(title);
-	}
-	
-	public void renameSelectedTaskList(String newTitle) {
-		TaskListTab taskListTab = listsTabBar.findSelectedTab();
-		TaskListContextMenu contextMenu = taskListTab.openContextMenu();
-		contextMenu.renameList();
-		taskListPrompt.assertMessage("Rename list");
-		taskListPrompt.enter(newTitle);
-		taskListTab.assertTitle(newTitle);
 	}
 	
 	public void deleteSelectedTaskList() {
