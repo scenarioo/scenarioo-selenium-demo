@@ -21,7 +21,7 @@ public class TaskListManagementWebTest extends TinyTodoWebTest {
 	public void createTaskList() {
 		start();
 		taskListsPage.createTaskList("Todo 2");
-		taskListsPage.showTaskList("Todo 2");
+		taskListsPage.selectTaskList("Todo 2");
 		tasksPage.assertIsEmpty();
 	}
 	
